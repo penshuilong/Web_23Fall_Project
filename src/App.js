@@ -1,10 +1,13 @@
+import { BrowserRouter as Router } from 'react-router-dom';
 import Project from "./project";
 
-import './App.css';
-
 function App() {
-  return (
-      <Project/>
+   return (
+    <Router>
+    <Project/>
+
+    </Router>
   );
 }
 export default App;
+

@@ -1,13 +1,13 @@
-import Navigation from "./Navigation";
-
+import React from "react";
+import HomePage from "./userMainPage";
+import Login from "./login";
 function Project() {
     return (
-      <div className="d-flex">
-        <Navigation />
+      <div>
+
         <div>
-          <h1>Account</h1>
-          <h1>Dashboard</h1>
-          <h1>Courses</h1>
+          <Login/>
+          <HomePage/>
         </div>
       </div>
     );

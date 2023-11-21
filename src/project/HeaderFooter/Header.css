@@ -1,0 +1,29 @@
+.site-header {
+  display: flex;
+  align-items: center; 
+  height: 80px; 
+}
+
+.logo-section {
+  display: flex;
+  align-items: center; 
+}
+
+.search-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-section .form-control {
+  padding-left: 30px; 
+}
+
+.user-interactions {
+  display: flex;
+  align-items: center;
+}
+
+.user-interactions button {
+  margin-left: 10px; 
+}
