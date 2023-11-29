@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faShoppingCart, faSignInAlt, faBars  } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 function Header() {
@@ -10,6 +10,8 @@ function Header() {
 
   const iconStyle = { position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', zIndex: 5 };
   const inputStyle = { paddingLeft: '30px' };
+  const navigate = useNavigate();
+  const jumpLogin = () => {navigate('/login');};
 
 
   return (
@@ -45,12 +47,12 @@ function Header() {
                 <FontAwesomeIcon icon={faSignInAlt} className="icon me-2" />
                 Sign in
               </button> */}
-              <Link to="/login">
-                <button className="rounded border border-secondary p-1 ml-2" >
+           
+                <button onClick={jumpLogin} className="rounded border border-secondary p-1 ml-2"  >
                   <FontAwesomeIcon icon={faSignInAlt} className="icon me-2" />
                     Sign in
                 </button>
-              </Link>
+              
 
 
             </div>
