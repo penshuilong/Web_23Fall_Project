@@ -2,21 +2,37 @@ import React from "react";
 import HomePage from "./userMainPage";
 import Login from "./login";
 import { Route, Routes } from "react-router-dom";
+import ShoppingCart from "./ShoppingCart";
+import ProductDetail from "./ProductDetail";
+import Header from "./HeaderFooter/Header";
+import Footer from "./HeaderFooter/Footer";
 function Project() {
-    return (
+  return (
+    <div>
+      <div >
+        <Header />
+      </div>
       <div>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+
+
+
+
+
+          <Route path="/productdetail" element={<ProductDetail />} />
+          <Route path="/shoppingcart" element={<ShoppingCart />} />
+        </Routes>
 
         <div>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<HomePage />} />
-      </Routes>
- 
-          
-          <HomePage/>
+          <Footer />
         </div>
+
+
+        {/* <HomePage /> */}
       </div>
-    );
-  }
-  export default Project;
-  
+    </div>
+  );
+}
+export default Project;

@@ -7,9 +7,9 @@ import Footer from '../HeaderFooter/Footer';
 function HomePage() {
   return (
     <div className="container-fluid">
-      <Header/>
+      {/* <Header/> */}
       <MainContent />
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 }

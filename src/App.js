@@ -1,12 +1,20 @@
 import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 import Project from "./project";
+import { Navigate } from 'react-router-dom';
 
 function App() {
-   return (
-    <Router>
-    <Project/>
+  return (
+    <HashRouter>
+      <div>
+        <Routes>
+          <Route path="/" element={<Navigate to="project" />} />
+          <Route path="/project/*" element={<Project />} />
+        </Routes>
+      </div>
 
-    </Router>
+    </HashRouter>
   );
 }
 export default App;
