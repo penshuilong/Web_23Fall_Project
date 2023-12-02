@@ -7,9 +7,9 @@ import Footer from '../HeaderFooter/Footer';
 function Login() {
   return (
     <div className="container-fluid">
-      <Header/>
+      {/* <Header/> */}
       <LoginPage />
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 
