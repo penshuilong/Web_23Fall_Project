@@ -1,0 +1,39 @@
+.section-heading-2 .image-placeholder {
+  width: 150px; 
+  height: 100px; 
+  background-color: lightgrey; 
+  border-radius: 0.25rem;
+  margin-right: 1rem;
+}
+
+.shop-intro {
+  background-size: cover; 
+  background-position: center; 
+  padding: 100px 0; 
+  color: white; 
+}
+
+.shop-intro-content {
+  width: 100%;
+  height: 200px;
+  background: lightgrey; 
+  padding: 20px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+  background-color: black;
+  color: white;
+}
+
+.navigation a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+}
+
+.navigation a:hover {
+  background-color: #555;
+}
