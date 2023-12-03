@@ -6,6 +6,8 @@ import ShoppingCart from "./ShoppingCart";
 import ProductDetail from "./ProductDetail";
 import Header from "./HeaderFooter/Header";
 import Footer from "./HeaderFooter/Footer";
+import SellerMainPage from "./sellerMainPage";
+import ManagerMainPage from "./managerMainPage";
 function Project() {
   return (
     <div>
@@ -19,8 +21,8 @@ function Project() {
 
 
 
-
-
+          <Route path="/managermainpage" element={<ManagerMainPage />} />
+          <Route path="/sellermainpage" element={<SellerMainPage />} />
           <Route path="/productdetail" element={<ProductDetail />} />
           <Route path="/shoppingcart" element={<ShoppingCart />} />
         </Routes>
