@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faShoppingCart, faSignInAlt, faBars } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
 import { useNavigate } from 'react-router-dom';
-
+import { API_KEY, MEAL_API } from '../client';
+import { useState } from 'react';
+import * as client from '../client';
 
 function Header() {
 
@@ -14,6 +16,13 @@ function Header() {
   const jumpLogin = () => { navigate('/project/login'); };
   const jumpShoppingCart = () => { navigate('/project/shoppingcart'); };
 
+  const [searchTerm, setSearchTerm] = useState("Arrabiata");
+  const [Results, setResults] = useState(null);
+
+  const fetchMeal = async () => {
+    const results = await client.findMeal(searchTerm);
+    setResults(results);
+  }
 
   return (
     <header className="site-header bg-light">
@@ -32,9 +41,12 @@ function Header() {
               <input
                 type="search"
                 className="form-control"
-                placeholder="Search"
+                placeholder="Search..."
                 style={inputStyle}
+                onchange = {event => {setSearchTerm(event.target.value)}}
               />
+              <button onClick={fetchMeal} className="btn btn-primary" style={{ width: "100px" }}>Search</button>
+              {/* <pre>{JSON.stringify(Results, null, 2)}</pre> */}
             </div>
           </div>
           <div className="col-auto">
