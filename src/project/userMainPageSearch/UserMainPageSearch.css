@@ -1,0 +1,95 @@
+.search-page {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .search-navbar {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .search-navbar-link {
+    margin-right: 20px;
+    text-decoration: none;
+    color: black;
+    padding: 5px 0;
+    cursor: pointer;
+  }
+  
+  .search-navbar-link-active {
+    font-weight: bold;
+    border-bottom: 3px solid black;
+  }
+  
+  .search-main-content {
+    display: flex;
+    height: calc(100vh - 40px); /* Adjust the height as necessary */
+  }
+  
+  .search-filter-bar {
+    width: 200px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .search-filter-section {
+    margin-bottom: 20px;
+  }
+  
+  .search-filter-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .search-filter-option {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .search-shop-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .search-shop-card {
+    display: flex;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .search-shop-image {
+    width: 120px;
+    height: 120px;
+    background-color: #eee;
+    margin-right: 20px;
+  }
+  
+  .search-shop-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .search-shop-title {
+    font-weight: bold;
+  }
+  
+  .search-meals {
+    display: flex;
+  }
+  
+  .search-meal {
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
