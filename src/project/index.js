@@ -6,12 +6,13 @@ import ShoppingCart from "./ShoppingCart";
 import ProductDetail from "./ProductDetail";
 import Header from "./HeaderFooter/Header";
 import Footer from "./HeaderFooter/Footer";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BuyerSignup from "./signup/buyer";
 import SellerSignup from "./signup/seller";
 import UserMainPageSearch from "./userMainPageSearch/search";
-
-
 function Project() {
+  const  [key, setKey] = React.useState("home");
   return (
     <div>
       <div >
