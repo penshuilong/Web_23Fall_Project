@@ -2,6 +2,9 @@ import * as client from "./client";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { clearCurrentUser } from "./reducer";
+
 function Account() {
   const { id } = useParams();
   const [account, setAccount] = useState(null);
@@ -17,10 +20,15 @@ function Account() {
   const save = async () => {
     await client.updateUser(account);
   };
+  
+  const dispatch = useDispatch();
   const signout = async () => {
     await client.signout();
-    navigate("/project/login");
+    dispatch(clearCurrentUser()); 
+    navigate("/project/Login");
   };
+
+
 
 
   useEffect(() => {
@@ -76,6 +84,14 @@ function Account() {
                   restaurantAddress: e.target.value })}/>
             </>
           )}
+          <br/><br/>
+
+          <select onChange={(e) => setAccount({ ...account, role: e.target.value })}>
+            <option value="USER">User</option>
+            <option value="SELLER">Seller</option>
+            <option value="MANAGER">Manager</option>
+          </select>
+          <br/><br/>
        
           <button onClick={save} className="btn btn-secondary">Save</button>
           <br/><br/>

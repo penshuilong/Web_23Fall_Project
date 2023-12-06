@@ -35,7 +35,6 @@ function Project() {
           <Route path="/search" element={<UserMainPageSearch/>} />
           <Route path="/Account" element={<Account/>} />
           <Route path="/Account/:id" element={<Account />} />
-          {/* 这玩意是给manager删除非法用户以及更改非法用户名的的 */}
           <Route path="/admin/users" element={<UserTable />} />
 
           <Route path="/productdetail" element={<ProductDetail />} />
