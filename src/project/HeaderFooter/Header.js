@@ -6,6 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { API_KEY, MEAL_API } from '../client';
 import { useState } from 'react';
 import * as client from '../client';
+import { useEffect } from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import store from '../store';
+// import { setSearchQuery } from './searchReducer';
 
 function Header() {
 
@@ -15,13 +19,13 @@ function Header() {
   const navigate = useNavigate();
   const jumpLogin = () => { navigate('/project/login'); };
   const jumpShoppingCart = () => { navigate('/project/shoppingcart'); };
+  const jumpSearch = () => { navigate('/project/search'); };
 
   const [searchTerm, setSearchTerm] = useState("Arrabiata");
-  const [Results, setResults] = useState(null);
 
   const fetchMeal = async () => {
     const results = await client.findMeal(searchTerm);
-    setResults(results);
+    navigate('/project/search', { state: { results } });
   }
 
   return (
@@ -43,10 +47,9 @@ function Header() {
                 className="form-control"
                 placeholder="Search..."
                 style={inputStyle}
-                onchange = {event => {setSearchTerm(event.target.value)}}
+                onChange = {event => {setSearchTerm(event.target.value)}}
               />
               <button onClick={fetchMeal} className="btn btn-primary" style={{ width: "100px" }}>Search</button>
-              {/* <pre>{JSON.stringify(Results, null, 2)}</pre> */}
             </div>
           </div>
           <div className="col-auto">
@@ -66,6 +69,7 @@ function Header() {
                 <FontAwesomeIcon icon={faSignInAlt} className="icon me-2" />
                 Sign in
               </button>
+              
 
 
 
