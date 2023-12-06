@@ -13,10 +13,16 @@ import SellerSignup from "./user/seller";
 import UserMainPageSearch from "./userMainPageSearch/search";
 import Account from "./user/account";
 import UserTable from "./user/table";
+import CurrentUser from "./user/currentUser";
+import { Provider } from "react-redux";
+import store from "./store";
+import UserDetails from "./user/details";
 
 function Project() {
   const  [key, setKey] = React.useState("home");
   return (
+    <Provider store={store}>
+      <CurrentUser>
     <div>
       <div >
         <Header />
@@ -30,8 +36,8 @@ function Project() {
           <Route path="/search" element={<UserMainPageSearch/>} />
           <Route path="/Account" element={<Account/>} />
           <Route path="/Account/:id" element={<Account />} />
-          {/* 这玩意是给manager删除非法用户以及更改非法用户名的的 */}
           <Route path="/admin/users" element={<UserTable />} />
+          <Route path="/userdetail/:id" element={<UserDetails />} />
 
           <Route path="/productdetail" element={<ProductDetail />} />
           <Route path="/shoppingcart" element={<ShoppingCart />} />
@@ -45,6 +51,8 @@ function Project() {
         {/* <HomePage /> */}
       </div>
     </div>
+    </CurrentUser>
+    </Provider>
   );
 }
 export default Project;

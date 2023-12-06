@@ -2,6 +2,9 @@ import * as client from "./client";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { clearCurrentUser } from "./reducer";
+
 function Account() {
   const { id } = useParams();
   const [account, setAccount] = useState(null);
@@ -17,10 +20,15 @@ function Account() {
   const save = async () => {
     await client.updateUser(account);
   };
+  
+  const dispatch = useDispatch();
   const signout = async () => {
     await client.signout();
-    navigate("/project/login");
+    dispatch(clearCurrentUser()); 
+    navigate("/project/Login");
   };
+
+
 
 
   useEffect(() => {
@@ -61,11 +69,38 @@ function Account() {
           <input value={account.email}
             onChange={(e) => setAccount({ ...account,
               email: e.target.value })}/>
+
+          {/* Conditional rendering based on the role */}
+          {account.role === 'SELLER' && (
+            <>
+              <h5>Restaurant Name</h5>
+              <input value={account.restaurantName}
+                onChange={(e) => setAccount({ ...account,
+                  restaurantName: e.target.value })}/>
+
+              <h5>Restaurant Address</h5>
+              <input value={account.restaurantAddress}
+                onChange={(e) => setAccount({ ...account,
+                  restaurantAddress: e.target.value })}/>
+            </>
+          )}
+          <br/><br/>
+
+          <select onChange={(e) => setAccount({ ...account, role: e.target.value })}>
+            <option value="USER">User</option>
+            <option value="SELLER">Seller</option>
+            <option value="MANAGER">Manager</option>
+          </select>
+          <br/><br/>
        
-          <button onClick={save}>Save</button>
-          <Link to="/project/admin/users" className="btn btn-warning w-100">
-            Users
+          <button onClick={save} className="btn btn-secondary">Save</button>
+          <br/><br/>
+
+             
+            <Link to="/project/admin/users" className="btn btn-warning w-100">
+              Users
             </Link>
+         
 
             <button onClick={signout} className="btn btn-primary w-100">Signout
             </button>
