@@ -7,12 +7,11 @@ import { useSelector } from 'react-redux';
 import { API_KEY, MEAL_API } from '../client';
 import * as client from '../client';
 
-import { useEffect } from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import store from '../store';
 // import { setSearchQuery } from './searchReducer';
 
-import CurrentUser from "../user/currentUser"
+import CurrentUser from "../user/currentUser";
 
 
 
