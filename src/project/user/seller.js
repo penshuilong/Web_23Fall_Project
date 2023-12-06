@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './SellerSignup.css'; 
+import * as client from "./client";
 
 function SellerSignup() {
   const [error, setError] = useState("");
@@ -11,23 +12,35 @@ function SellerSignup() {
     restaurantAddress: "",
     email: "",
     password: "",
+    birthdayMonth: "",
+    birthdayDay: "",
+    dob: ""
   });
   const navigate = useNavigate();
 
   const signup = async () => {
-    // try {
-    //   // Assume client.signup is correctly implemented
-    //   await client.signup(credentials);
-    //   navigate("/dashboard"); // Navigate to your success page
-    // } catch (err) {
-    //   setError(err.response.data.message);
-    // }
+    try {
+      await client.signup({
+        ...credentials,
+        dob: `${credentials.birthdayMonth}-${credentials.birthdayDay}`
+      });
+      navigate("/project/Account");
+    } catch (err) {
+      setError(err.response.data.message);
+    }
   };
 
   return (
     <div className="sellerSignup-container">
       <h1>Sign Up</h1>
       {error && <div className="sellerSignup-error">{error}</div>}
+
+      <label>Username</label>
+      <input
+        className="sellerSignup-input"
+        value={credentials.username}
+        onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+      />
       <label>First Name</label>
       <input
         className="sellerSignup-input"

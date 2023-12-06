@@ -1,10 +1,26 @@
-import React from 'react';
 import './MainContent.css'; 
+import React, { useState, useEffect } from 'react';
+import * as client from "../user/client"
+import CurrentUser from "../user/currentUser"
 
-function MainContent() {
+
+function HomePage() {
   const backgroundImage = "回头找一张好看的";
+  const [loggedinUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    const fetchLoggedInUser = async () => {
+      const user = await client.account(); 
+      setLoggedInUser(user);
+    };
+
+    fetchLoggedInUser();
+  }, []);
+
+
 
   return (
+    <CurrentUser>
     <main className="main-content">
 
       <div className="row">
@@ -16,6 +32,17 @@ function MainContent() {
 
           </nav>
         </div>
+
+
+       {/* Welcome Back Message(好丑啊 但是没想好怎么改) */}
+       {loggedinUser && (
+        <div className="row">
+          <div className="col-12">
+          <p className="welcome-back ms-3">Welcome back, {loggedinUser.username}!</p>
+          </div>
+        </div>
+      )}
+
       {/* Shop Introduction */}
        <div className="shop-intro" style={{ backgroundImage: `url(${backgroundImage})` }}>
         <div className="shop-intro-content">
@@ -71,7 +98,8 @@ function MainContent() {
         <button className="btn btn-outline-secondary">Show More</button>
       </div>
     </main>
+    </CurrentUser>
   );
 }
 
-export default MainContent;
+export default HomePage;

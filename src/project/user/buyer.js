@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './BuyerSignup.css'; // Import the CSS styles
-
+import './BuyerSignup.css'; 
+import * as client from "./client";
 function BuyerSignup() {
   const [error, setError] = useState("");
   const [credentials, setCredentials] = useState({
@@ -11,25 +11,32 @@ function BuyerSignup() {
     password: "",
     birthdayMonth: "",
     birthdayDay: "",
+    dob: "" 
   });
   const navigate = useNavigate();
 
   const signup = async () => {
-    // try {
-    //   await client.signup({
-    //     ...credentials,
-    //     birthday: `${credentials.birthdayMonth}-${credentials.birthdayDay}`
-    //   });
-    //   navigate("/Kanbas/Account");
-    // } catch (err) {
-    //   setError(err.response.data.message);
-    // }
+    try {
+      await client.signup({
+        ...credentials,
+        dob: `${credentials.birthdayMonth}-${credentials.birthdayDay}`
+      });
+      navigate("/project/Account");
+    } catch (err) {
+      setError(err.response.data.message);
+    }
   };
 
   return (
     <div className="buyerSignup-container">
       <h1>Sign Up</h1>
       {error && <div className="buyerSignup-error">{error}</div>}
+      <label>Username</label>
+      <input
+        className="sellerSignup-input"
+        value={credentials.username}
+        onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+      />
       <label>First Name</label>
       <input
         className="buyerSignup-input"

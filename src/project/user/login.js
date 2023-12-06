@@ -1,11 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector, useDispatch } from 'react-redux';
+import * as client from "./client";
+import { setCurrentUser } from "./reducer";
 
 function Login() {
-
+  const [credentials, setCredentials] = useState({ username: "", password: "" });
   const [role, setRole] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.userReducer.currentUser);
+
+
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/project/Account");
+    }
+  }, [currentUser, navigate]);
+
+  const signin = async () => {
+    try {
+      const user = await client.signin(credentials);
+    
+      dispatch(setCurrentUser(user)); 
+    } catch (error) {
+    }
+  };
 
   const handleRoleChange = (event) => {
     setRole(event.target.value);
@@ -18,23 +39,27 @@ function Login() {
       navigate('/project/sellersignup');
     }
   };
+
   return (
     <div className="LoginPage bg-light py-5">
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-4">
+            {/* Signin */}
             <div className="mb-4">
               <h2>Sign In</h2>
-              <input type="email" className="form-control my-3" placeholder="Email" />
-              <input type="password" className="form-control my-3" placeholder="Password" />
+              <input className="form-control my-3" placeholder="Username" value={credentials.username} onChange={(e) => setCredentials({...credentials, username: e.target.value})}/>
+              <input className="form-control my-3" placeholder="Password" value={credentials.password} onChange={(e) => setCredentials({...credentials, password: e.target.value})}/>
               <div className="form-check mb-4">
                 <input type="checkbox" className="form-check-input" id="keep-signed-in" />
                 <label className="form-check-label" htmlFor="keep-signed-in">Keep me signed in</label>
               </div>
-              <button type="button" className="btn btn-danger btn-lg btn-block">Sign in</button>
+              <button type="button" className="btn btn-danger btn-lg btn-block" onClick={signin}>Sign in</button>
             </div>
           </div>
 
+
+          {/* Create Account */}
           <div className="col-md-6">
             <div className="mb-4">
               <h2>No account yet</h2>
