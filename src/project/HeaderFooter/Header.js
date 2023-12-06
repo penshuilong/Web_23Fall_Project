@@ -80,14 +80,6 @@ function Header() {
                 Cart
               </button>
 
-       
-
-
-              <button onClick={jumpLogin} className="rounded border p-1 ml-2 btn btn-outline-secondary" style={{ width: "200px" }} >
-                <FontAwesomeIcon icon={faSignInAlt} className="icon me-2" />
-                Sign in
-              </button>
-              
 
           {currentUser ? (
           <button onClick={jumpAccount} className="rounded border p-1 ml-2 btn btn-outline-secondary" style={{ width: "200px" }}>
