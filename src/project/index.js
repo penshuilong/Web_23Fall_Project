@@ -12,6 +12,7 @@ import BuyerSignup from "./user/buyer";
 import SellerSignup from "./user/seller";
 import UserMainPageSearch from "./userMainPageSearch/search";
 import Account from "./user/account";
+import UserTable from "./user/table";
 
 function Project() {
   const  [key, setKey] = React.useState("home");
@@ -28,6 +29,9 @@ function Project() {
           <Route path="/sellersignup" element={<SellerSignup/>} />
           <Route path="/search" element={<UserMainPageSearch/>} />
           <Route path="/Account" element={<Account/>} />
+          <Route path="/Account/:id" element={<Account />} />
+          {/* 这玩意是给manager删除非法用户的 */}
+          <Route path="/admin/users" element={<UserTable />} />
 
 
 
