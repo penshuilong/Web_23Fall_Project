@@ -16,6 +16,7 @@ import UserTable from "./user/table";
 import CurrentUser from "./user/currentUser";
 import { Provider } from "react-redux";
 import store from "./store";
+import UserDetails from "./user/details";
 
 function Project() {
   const  [key, setKey] = React.useState("home");
@@ -36,6 +37,7 @@ function Project() {
           <Route path="/Account" element={<Account/>} />
           <Route path="/Account/:id" element={<Account />} />
           <Route path="/admin/users" element={<UserTable />} />
+          <Route path="/userdetail/:id" element={<UserDetails />} />
 
           <Route path="/productdetail" element={<ProductDetail />} />
           <Route path="/shoppingcart" element={<ShoppingCart />} />
