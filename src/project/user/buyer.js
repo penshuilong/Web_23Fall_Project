@@ -30,6 +30,12 @@ function BuyerSignup() {
     <div className="buyerSignup-container">
       <h1>Sign Up</h1>
       {error && <div className="buyerSignup-error">{error}</div>}
+      <label>Username</label>
+      <input
+        className="sellerSignup-input"
+        value={credentials.username}
+        onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+      />
       <label>First Name</label>
       <input
         className="buyerSignup-input"

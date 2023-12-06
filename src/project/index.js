@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import BuyerSignup from "./user/buyer";
 import SellerSignup from "./user/seller";
 import UserMainPageSearch from "./userMainPageSearch/search";
+import Account from "./user/account";
 
 function Project() {
   const  [key, setKey] = React.useState("home");
@@ -26,6 +27,7 @@ function Project() {
           <Route path="/buyersignup" element={<BuyerSignup />} />
           <Route path="/sellersignup" element={<SellerSignup/>} />
           <Route path="/search" element={<UserMainPageSearch/>} />
+          <Route path="/Account" element={<Account/>} />
 
 
 
