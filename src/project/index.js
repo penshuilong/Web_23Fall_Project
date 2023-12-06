@@ -14,9 +14,6 @@ import UserMainPageSearch from "./userMainPageSearch/search";
 
 
 
-import store from "./store";
-import { Provider } from "react-redux";
-
 import Account from "./user/account";
 import UserTable from "./user/table";
 import CurrentUser from "./user/currentUser";
@@ -31,40 +28,40 @@ function Project() {
     <Provider store={store}>
 
       <CurrentUser>
-    <div>
-      <div >
-        <Header />
-      </div>
-      <div>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/buyersignup" element={<BuyerSignup />} />
-          <Route path="/sellersignup" element={<SellerSignup/>} />
-          <Route path="/search" element={<UserMainPageSearch/>} />
-          <Route path="/Account" element={<Account/>} />
-          <Route path="/Account/:id" element={<Account />} />
-          <Route path="/admin/users" element={<UserTable />} />
-          <Route path="/userdetail/:id" element={<UserDetails />} />
-
-
-            <Route path="/productdetail/:mealId" element={<ProductDetail />} />
-            <Route path="/shoppingcart" element={<ShoppingCart />} />
-          </Routes>
-
-          <div>
-            <Footer />
+        <div>
+          <div >
+            <Header />
           </div>
+          <div>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/buyersignup" element={<BuyerSignup />} />
+              <Route path="/sellersignup" element={<SellerSignup />} />
+              <Route path="/search" element={<UserMainPageSearch />} />
+              <Route path="/Account" element={<Account />} />
+              <Route path="/Account/:id" element={<Account />} />
+              <Route path="/admin/users" element={<UserTable />} />
+              <Route path="/userdetail/:id" element={<UserDetails />} />
 
 
-          {/* <HomePage /> */}
+              <Route path="/productdetail/:mealId" element={<ProductDetail />} />
+              <Route path="/shoppingcart" element={<ShoppingCart />} />
+            </Routes>
+
+            <div>
+              <Footer />
+            </div>
+
+
+            {/* <HomePage /> */}
+          </div>
         </div>
-      </div>
 
-    </div>
+      
     </CurrentUser>
 
-    </Provider>
+    </Provider >
   );
 }
 export default Project;
