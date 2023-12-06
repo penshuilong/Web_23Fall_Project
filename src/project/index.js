@@ -11,6 +11,12 @@ import { useNavigate } from "react-router-dom";
 import BuyerSignup from "./user/buyer";
 import SellerSignup from "./user/seller";
 import UserMainPageSearch from "./userMainPageSearch/search";
+
+
+
+import store from "./store";
+import { Provider } from "react-redux";
+
 import Account from "./user/account";
 import UserTable from "./user/table";
 import CurrentUser from "./user/currentUser";
@@ -18,10 +24,12 @@ import { Provider } from "react-redux";
 import store from "./store";
 import UserDetails from "./user/details";
 
+
 function Project() {
-  const  [key, setKey] = React.useState("home");
+  const [key, setKey] = React.useState("home");
   return (
     <Provider store={store}>
+
       <CurrentUser>
     <div>
       <div >
@@ -39,19 +47,23 @@ function Project() {
           <Route path="/admin/users" element={<UserTable />} />
           <Route path="/userdetail/:id" element={<UserDetails />} />
 
-          <Route path="/productdetail" element={<ProductDetail />} />
-          <Route path="/shoppingcart" element={<ShoppingCart />} />
-        </Routes>
 
-        <div>
-          <Footer />
+            <Route path="/productdetail/:mealId" element={<ProductDetail />} />
+            <Route path="/shoppingcart" element={<ShoppingCart />} />
+          </Routes>
+
+          <div>
+            <Footer />
+          </div>
+
+
+          {/* <HomePage /> */}
         </div>
-
-
-        {/* <HomePage /> */}
       </div>
+
     </div>
     </CurrentUser>
+
     </Provider>
   );
 }

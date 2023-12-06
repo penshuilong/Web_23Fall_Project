@@ -6,7 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { API_KEY, MEAL_API } from '../client';
 import * as client from '../client';
+
+import { useEffect } from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import store from '../store';
+// import { setSearchQuery } from './searchReducer';
+
 import CurrentUser from "../user/currentUser"
+
 
 
 function Header() {
@@ -26,14 +33,17 @@ function Header() {
   const navigate = useNavigate();
   const jumpLogin = () => { navigate('/project/login'); };
   const jumpShoppingCart = () => { navigate('/project/shoppingcart'); };
+
+  const jumpSearch = () => { navigate('/project/search'); };
+
   const jumpAccount = () => {navigate('/project/Account');};
 
+
   const [searchTerm, setSearchTerm] = useState("Arrabiata");
-  const [Results, setResults] = useState(null);
 
   const fetchMeal = async () => {
     const results = await client.findMeal(searchTerm);
-    setResults(results);
+    navigate('/project/search', { state: { results } });
   }
 
 
@@ -58,10 +68,9 @@ function Header() {
                 className="form-control"
                 placeholder="Search..."
                 style={inputStyle}
-                onchange = {event => {setSearchTerm(event.target.value)}}
+                onChange = {event => {setSearchTerm(event.target.value)}}
               />
               <button onClick={fetchMeal} className="btn btn-primary" style={{ width: "100px" }}>Search</button>
-              {/* <pre>{JSON.stringify(Results, null, 2)}</pre> */}
             </div>
           </div>
           <div className="col-auto">
@@ -74,6 +83,13 @@ function Header() {
 
        
 
+
+              <button onClick={jumpLogin} className="rounded border p-1 ml-2 btn btn-outline-secondary" style={{ width: "200px" }} >
+                <FontAwesomeIcon icon={faSignInAlt} className="icon me-2" />
+                Sign in
+              </button>
+              
+
           {currentUser ? (
           <button onClick={jumpAccount} className="rounded border p-1 ml-2 btn btn-outline-secondary" style={{ width: "200px" }}>
             <FontAwesomeIcon icon={faUser} className="icon me-2" />
@@ -85,6 +101,7 @@ function Header() {
             Sign in
           </button>
         )}
+
 
               
 
