@@ -11,14 +11,23 @@ import { useNavigate } from "react-router-dom";
 import BuyerSignup from "./user/buyer";
 import SellerSignup from "./user/seller";
 import UserMainPageSearch from "./userMainPageSearch/search";
+
+
+
 import Account from "./user/account";
 import UserTable from "./user/table";
+import CurrentUser from "./user/currentUser";
+import { Provider } from "react-redux";
+import store from "./store";
+import UserDetails from "./user/details";
+
 
 import SellerMainPage from "./sellerMainPage";
 import ManagerMainPage from "./managerMainPage";
 function Project() {
   const [key, setKey] = React.useState("home");
   return (
+<<<<<<< HEAD
     <div>
       <div >
         <Header />
@@ -40,15 +49,45 @@ function Project() {
           <Route path="/productdetail" element={<ProductDetail />} />
           <Route path="/shoppingcart" element={<ShoppingCart />} />
         </Routes>
+=======
+    <Provider store={store}>
+>>>>>>> fd5ba47a73a33f02a50ce87647baabe604968404
 
+      <CurrentUser>
         <div>
-          <Footer />
+          <div >
+            <Header />
+          </div>
+          <div>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/buyersignup" element={<BuyerSignup />} />
+              <Route path="/sellersignup" element={<SellerSignup />} />
+              <Route path="/search" element={<UserMainPageSearch />} />
+              <Route path="/Account" element={<Account />} />
+              <Route path="/Account/:id" element={<Account />} />
+              <Route path="/admin/users" element={<UserTable />} />
+              <Route path="/userdetail/:id" element={<UserDetails />} />
+
+
+              <Route path="/productdetail/:mealId" element={<ProductDetail />} />
+              <Route path="/shoppingcart" element={<ShoppingCart />} />
+            </Routes>
+
+            <div>
+              <Footer />
+            </div>
+
+
+            {/* <HomePage /> */}
+          </div>
         </div>
 
+      
+    </CurrentUser>
 
-        {/* <HomePage /> */}
-      </div>
-    </div>
+    </Provider >
   );
 }
 export default Project;

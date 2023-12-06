@@ -1,32 +1,36 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 
 function CartList() {
-    const cartItems = [
-        { id: 1, name: 'Item 1', price: 10.99, quantity: 2 },
-        { id: 2, name: 'Item 2', price: 15.99, quantity: 1 },
-        { id: 3, name: 'Item 3', price: 8.99, quantity: 1 },
-    ];
+    
+    const { cartItems } = useSelector(state => state.cartReducer);
+    console.log('cartItems:', cartItems);
+
+
+
+
     return (
         <div>
             <h1>Your Shopping Cart</h1>
             <div className='container'>
                 <div className='row'>
                     <ul className="list-group">
-                        {cartItems.map(item => (
+                        {cartItems && cartItems.map(item => (
                             <li key={item.id} className="list-group-item border-0">
                                 <div className="card">
                                     <div className="row">
                                         {/* Left column for image */}
                                         <div className="col-md-3">
                                             {/* Add your image component or placeholder here */}
-                                            <img src="placeholder.jpg" alt="Item" className="img-fluid" />
+                                            <img src={item.picture}  className="img-fluid" />
                                         </div>
                                         {/* Middle column for item details */}
                                         <div className="col-md-6">
                                             <div className="card-body">
                                                 <h5 className="card-title">{item.name}</h5>
                                                 <p className="card-text">Quantity: {item.quantity}</p>
-                                                <p className="card-text">Price: ${item.price.toFixed(2)}</p>
+                                                <p className="card-text">Price: ${item.price}</p>
                                             </div>
                                         </div>
                                         {/* Right column for total price and delete button */}

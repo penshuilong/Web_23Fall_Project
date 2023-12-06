@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import * as client from "./client";
+import { setCurrentUser } from "./reducer";
 
 function Login() {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const [role, setRole] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.userReducer.currentUser);
+
+
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/project/Account");
+    }
+  }, [currentUser, navigate]);
+
   const signin = async () => {
-    await client.signin(credentials);
-    navigate("/project/Account");
+    try {
+      const user = await client.signin(credentials);
+    
+      dispatch(setCurrentUser(user)); 
+    } catch (error) {
+    }
   };
-
-
 
   const handleRoleChange = (event) => {
     setRole(event.target.value);
