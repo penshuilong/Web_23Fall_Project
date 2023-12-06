@@ -1,0 +1,45 @@
+/* index.css */
+#wrapper {
+    overflow-x: hidden;
+  }
+  
+  #sidebar-wrapper {
+    min-width: 250px;
+    max-width: 250px;
+    background: #f8f9fa;
+  }
+  
+  #page-content-wrapper {
+    width: 100%;
+    padding-top: 20px;
+  }
+  
+  .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .list-group-item-action {
+    display: block;
+    color: #333333;
+    font-weight: 500;
+    padding: 0.75rem 1.25rem;
+  }
+  
+  .list-group-item-action i {
+    margin-right: 10px;
+  }
+  
+  .footer {
+    background-color: #f5f5f5;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .text-muted {
+    color: #6c757d!important;
+  }
+  
