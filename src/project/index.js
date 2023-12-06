@@ -13,10 +13,15 @@ import SellerSignup from "./user/seller";
 import UserMainPageSearch from "./userMainPageSearch/search";
 import Account from "./user/account";
 import UserTable from "./user/table";
+import CurrentUser from "./user/currentUser";
+import { Provider } from "react-redux";
+import store from "./store";
 
 function Project() {
   const  [key, setKey] = React.useState("home");
   return (
+    <Provider store={store}>
+      <CurrentUser>
     <div>
       <div >
         <Header />
@@ -45,6 +50,8 @@ function Project() {
         {/* <HomePage /> */}
       </div>
     </div>
+    </CurrentUser>
+    </Provider>
   );
 }
 export default Project;

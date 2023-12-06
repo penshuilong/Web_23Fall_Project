@@ -1,21 +1,26 @@
 import './MainContent.css'; 
 import React, { useState, useEffect } from 'react';
 import * as client from "../user/client"
+import CurrentUser from "../user/currentUser"
+
 
 function HomePage() {
   const backgroundImage = "回头找一张好看的";
-  const [currentUser, setCurrentUser] = useState(null);
+  const [loggedinUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
-    const fetchCurrentUser = async () => {
+    const fetchLoggedInUser = async () => {
       const user = await client.account(); 
-      setCurrentUser(user);
+      setLoggedInUser(user);
     };
 
-    fetchCurrentUser();
+    fetchLoggedInUser();
   }, []);
 
+
+
   return (
+    <CurrentUser>
     <main className="main-content">
 
       <div className="row">
@@ -30,10 +35,10 @@ function HomePage() {
 
 
        {/* Welcome Back Message(好丑啊 但是没想好怎么改) */}
-       {currentUser && (
+       {loggedinUser && (
         <div className="row">
           <div className="col-12">
-          <p className="welcome-back ms-3">Welcome back, {currentUser.username}!</p>
+          <p className="welcome-back ms-3">Welcome back, {loggedinUser.username}!</p>
           </div>
         </div>
       )}
@@ -93,6 +98,7 @@ function HomePage() {
         <button className="btn btn-outline-secondary">Show More</button>
       </div>
     </main>
+    </CurrentUser>
   );
 }
 

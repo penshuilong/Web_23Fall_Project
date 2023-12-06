@@ -5,7 +5,7 @@ import './Header.css';
 import { useNavigate } from 'react-router-dom';
 import { API_KEY, MEAL_API } from '../client';
 import * as client from '../client';
-import * as userclient from '../user/client'
+import CurrentUser from "../user/currentUser"
 
 function Header() {
 
@@ -25,19 +25,10 @@ function Header() {
     setResults(results);
   }
 
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      const user = await userclient.account(); 
-      setCurrentUser(user);
-    };
-
-    fetchCurrentUser();
-  }, []);
 
 
   return (
+    <CurrentUser>
     <header className="site-header bg-light">
       <div className="container-fluid">
         <div className="row align-items-center">
@@ -71,12 +62,8 @@ function Header() {
               </button>
 
        
-              {/* <button onClick={jumpLogin} className="rounded border p-1 ml-2 btn btn-outline-secondary" style={{ width: "200px" }} >
-                <FontAwesomeIcon icon={faSignInAlt} className="icon me-2" />
-                Sign in
-              </button> */}
 
-          {currentUser ? (
+          {CurrentUser ? (
           <button onClick={jumpAccount} className="rounded border p-1 ml-2 btn btn-outline-secondary" style={{ width: "200px" }}>
             <FontAwesomeIcon icon={faUser} className="icon me-2" />
             Account
@@ -97,6 +84,7 @@ function Header() {
 
       </div>
     </header>
+    </CurrentUser>
   );
 }
 
