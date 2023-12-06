@@ -27,31 +27,7 @@ import ManagerMainPage from "./managerMainPage";
 function Project() {
   const [key, setKey] = React.useState("home");
   return (
-<<<<<<< HEAD
-    <div>
-      <div >
-        <Header />
-      </div>
-      <div>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/buyersignup" element={<BuyerSignup />} />
-          <Route path="/sellersignup" element={<SellerSignup />} />
-          <Route path="/search" element={<UserMainPageSearch />} />
-          <Route path="/Account" element={<Account />} />
-          <Route path="/Account/:id" element={<Account />} />
-          {/* 这玩意是给manager删除非法用户以及更改非法用户名的的 */}
-          <Route path="/admin/users" element={<UserTable />} />
-
-          <Route path="/managermainpage" element={<ManagerMainPage />} />
-          <Route path="/sellermainpage" element={<SellerMainPage />} />
-          <Route path="/productdetail" element={<ProductDetail />} />
-          <Route path="/shoppingcart" element={<ShoppingCart />} />
-        </Routes>
-=======
     <Provider store={store}>
->>>>>>> fd5ba47a73a33f02a50ce87647baabe604968404
 
       <CurrentUser>
         <div>
@@ -69,6 +45,9 @@ function Project() {
               <Route path="/Account/:id" element={<Account />} />
               <Route path="/admin/users" element={<UserTable />} />
               <Route path="/userdetail/:id" element={<UserDetails />} />
+              <Route path="/sellermainpage" element={<SellerMainPage />} />
+              <Route path="/managermainpage" element={<ManagerMainPage />} />
+
 
 
               <Route path="/productdetail/:mealId" element={<ProductDetail />} />
@@ -84,10 +63,12 @@ function Project() {
           </div>
         </div>
 
-      
-    </CurrentUser>
+
+      </CurrentUser>
 
     </Provider >
+
+
   );
-}
+};
 export default Project;
