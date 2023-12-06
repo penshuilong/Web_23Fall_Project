@@ -42,7 +42,7 @@ function Account() {
 
   return (
     <div className="w-50">
-      <h1>Account</h1>
+      <h1>Profile</h1>
       {account && (
         <div>
           <h5>Username</h5>
@@ -96,10 +96,11 @@ function Account() {
           <button onClick={save} className="btn btn-secondary">Save</button>
           <br/><br/>
 
-             
+          {account.role === 'MANAGER' && (
             <Link to="/project/admin/users" className="btn btn-warning w-100">
               Users
             </Link>
+          )}
          
 
             <button onClick={signout} className="btn btn-primary w-100">Signout

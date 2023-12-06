@@ -34,8 +34,9 @@ function Header() {
   const jumpShoppingCart = () => { navigate('/project/shoppingcart'); };
 
   const jumpSearch = () => { navigate('/project/search'); };
+  const jumpHome = () => { navigate('/project'); };
 
-  const jumpAccount = () => {navigate('/project/Account');};
+  const jumpAccount = () => {navigate('/project/profile');};
 
 
   const [searchTerm, setSearchTerm] = useState("Arrabiata");

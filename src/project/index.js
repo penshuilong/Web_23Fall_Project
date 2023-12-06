@@ -40,8 +40,8 @@ function Project() {
               <Route path="/buyersignup" element={<BuyerSignup />} />
               <Route path="/sellersignup" element={<SellerSignup />} />
               <Route path="/search" element={<UserMainPageSearch />} />
-              <Route path="/Account" element={<Account />} />
-              <Route path="/Account/:id" element={<Account />} />
+              <Route path="/profile" element={<Account />} />
+              {/* <Route path="/Account/:id" element={<Account />} /> */}
               <Route path="/admin/users" element={<UserTable />} />
               <Route path="/profile/:id" element={<UserDetails />} />
 
