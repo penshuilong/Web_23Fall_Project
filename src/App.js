@@ -1,13 +1,14 @@
 import React from 'react';
-import Profile from './Profile';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import RestaurantMainPage from './Restaurant/restaurantMainPage';
 
 function App() {
   return (
     <div className="App">
-      <Profile />
-      {/* Other components */}
+      <RestaurantMainPage />
     </div>
   );
 }
 
 export default App;
+

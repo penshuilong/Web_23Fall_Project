@@ -1,0 +1,28 @@
+.search-button, .cart-signin-button {
+    white-space: nowrap; /* Prevent text from wrapping */
+    color: black !important;
+    background-color: gray !important;
+    border-color: gray !important;
+  }
+  
+.search-button {
+    color: gray !important;
+    background-color: white !important;
+    border-color: gray !important;
+  }
+.open-until {
+    color: gray; /* Adjust the color as needed */
+  }
+.nav-pills .nav-link {
+    color: black; /* Black text */
+    background-color: white; /* White background */
+    border: 1px solid #ddd; /* Light border for definition */
+  }
+  
+.nav-pills .nav-link.active {
+    color: white; /* White text for active link */
+    background-color: black; /* Black background for active link */
+  }
+
+
+  
