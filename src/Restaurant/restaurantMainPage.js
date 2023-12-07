@@ -94,6 +94,8 @@ const RestaurantMainPage = () => {
                 <Nav.Item><Nav.Link href="#">Get help</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="#">Create a business account</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link href="#">About</Nav.Link></Nav.Item>
+                <Nav.Item><Nav.Link href="#">Contact us</Nav.Link></Nav.Item>
+                <Nav.Item><Nav.Link href="#">Student discount</Nav.Link></Nav.Item>
                 </Nav>
             </Col>
             </Row>
