@@ -54,7 +54,7 @@ const RestaurantMainPage = () => {
         <div className="text-center my-5">
           <h1>Restaurant Name 1</h1>
           <h5>France...</h5>
-          <p className="open-until">Open until 9:30 PM</p>
+          <p className="open-until">Open until 9:30 PM.</p>
         </div>
 
         <Nav className="nav-pills nav-fill mb-5">
