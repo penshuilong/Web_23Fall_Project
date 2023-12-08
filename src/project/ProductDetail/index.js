@@ -10,6 +10,7 @@ import * as likesClient from "../likes/client";
 import * as userClient from "../user/client";
 import { Link } from 'react-router-dom';
 
+
 function ProductDetail() {
     //new stuff, delete if there are bugs
     const [currentUser, setCurrentUser] = useState(null);
