@@ -4,6 +4,9 @@ import * as client from "./client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as followsClient from "../follows/client";
+import * as likesClient from "../likes/client";
+
+
 function UserDetails() {
   const [user, setUser] = useState(null);
   const [likes, setLikes] = useState([]);
@@ -11,10 +14,10 @@ function UserDetails() {
   const [following, setFollowing] = useState([]);
   const { currentUser } = useSelector((state) => state.userReducer);
   const { id } = useParams();
-//   const fetchLikes = async () => {
-//     const likes = await likesClient.findAlbumsThatUserLikes(id);
-//     setLikes(likes);
-//   };
+  const fetchLikes = async () => {
+    const likes = await likesClient.findMealsThatUserLikes(id);
+    setLikes(likes);
+  };
   const navigate = useNavigate();
   const fetchUser = async () => {
     const user = await client.findUserById(id);
@@ -43,12 +46,12 @@ function UserDetails() {
   };
   useEffect(() => {
     fetchUser();
-    // fetchLikes();
+    fetchLikes();
     fetchFollowers();
     fetchFollowing();
   }, [id]);
   return (
-    <div>
+    <div className="ms-5">
       {currentUser && currentUser._id !== id && (
         <>
           {alreadyFollowing() ? (
@@ -70,16 +73,17 @@ function UserDetails() {
           <p>First Name: {user.firstName}</p>
           <p>Last Name: {user.lastName}</p>
           
-          {/* <h3>Likes</h3>
+          <h3>Likes</h3>
           <ul className="list-group">
             {likes.map((like, index) => (
               <li key={index} className="list-group-item">
-                <Link to={`/project/details/${like.albumId}`}>
-                  {like.albumId}
+                <Link to={`/project/details/${like.idMeal}`}>
+                <img src={like.strMealThumb} alt={like.strMeal} style={{ width: '100px', height: '100px' }} />
+                  {like.strMeal}
                 </Link>
               </li>
             ))}
-          </ul> */}
+          </ul>
           <h3>Followers</h3>
           <div className="list-group">
             {followers.map((follows, index) => (
