@@ -23,13 +23,9 @@
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
-<<<<<<< HEAD
     "react-router-dom": "^6.20.1",
-=======
     "redux": "^5.0.0",
     "react-redux": "^9.0.2",
-    "react-router-dom": "^6.19.0",
->>>>>>> fd5ba47a73a33f02a50ce87647baabe604968404
     "react-scripts": "^5.0.1",
     "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
