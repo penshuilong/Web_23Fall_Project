@@ -10,23 +10,29 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.userReducer.currentUser);
+  const [errorMessage, setErrorMessage] = useState("");
 
 
 
   useEffect(() => {
     if (currentUser) {
-      navigate("/project/Account");
+      navigate("/project");
     }
   }, [currentUser, navigate]);
+
 
   const signin = async () => {
     try {
       const user = await client.signin(credentials);
-    
-      dispatch(setCurrentUser(user)); 
+      dispatch(setCurrentUser(user));
+      setErrorMessage("");
     } catch (error) {
+      setErrorMessage("Incorrect username or password");
+      console.log("Login error:", error);
     }
   };
+  
+  
 
   const handleRoleChange = (event) => {
     setRole(event.target.value);
@@ -54,6 +60,8 @@ function Login() {
                 <input type="checkbox" className="form-check-input" id="keep-signed-in" />
                 <label className="form-check-label" htmlFor="keep-signed-in">Keep me signed in</label>
               </div>
+
+              {errorMessage && <div className="alert alert-danger">{errorMessage}</div>} 
               <button type="button" className="btn btn-danger btn-lg btn-block" onClick={signin}>Sign in</button>
             </div>
           </div>

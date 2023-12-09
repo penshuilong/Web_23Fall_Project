@@ -7,11 +7,16 @@ import { Link } from 'react-router-dom';
 function UserMainPageSearch() {
   // const results = useSelector(state => state.results);
   const location = useLocation();
-  const results = location.state?.results || null;
+
+  //这个const你搜索不存在的东西会出bug 但是新的也不一定对
+  // const results = location.state?.results || null;
+  const results = location.state?.results || []; 
+
 
   const groupedByCategory = {};
 
   // Group items by category
+
   results.forEach((result) => {
     const category = result.strCategory;
 

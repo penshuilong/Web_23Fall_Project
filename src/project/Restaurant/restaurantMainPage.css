@@ -1,0 +1,15 @@
+.open-until {
+    color: gray; /* Adjust the color as needed */
+  }
+.nav-pills .nav-link {
+    color: black; /* Black text */
+    background-color: white; /* White background */
+    border: 1px solid #ddd; /* Light border for definition */
+  }
+  
+.nav-pills .nav-link.active {
+    color: white; /* White text for active link */
+    background-color: black; /* Black background for active link */
+  }
+ 
+ 

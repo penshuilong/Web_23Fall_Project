@@ -22,11 +22,12 @@ import store from "./store";
 import UserDetails from "./user/details";
 
 
+import SellerMainPage from "./sellerMainPage";
+import ManagerMainPage from "./managerMainPage";
 function Project() {
   const [key, setKey] = React.useState("home");
   return (
     <Provider store={store}>
-
       <CurrentUser>
         <div>
           <div >
@@ -39,10 +40,14 @@ function Project() {
               <Route path="/buyersignup" element={<BuyerSignup />} />
               <Route path="/sellersignup" element={<SellerSignup />} />
               <Route path="/search" element={<UserMainPageSearch />} />
-              <Route path="/Account" element={<Account />} />
-              <Route path="/Account/:id" element={<Account />} />
+              <Route path="/profile" element={<Account />} />
+              {/* <Route path="/Account/:id" element={<Account />} /> */}
               <Route path="/admin/users" element={<UserTable />} />
+              <Route path="/profile/:id" element={<UserDetails />} />
               <Route path="/userdetail/:id" element={<UserDetails />} />
+              <Route path="/sellermainpage" element={<SellerMainPage />} />
+              <Route path="/managermainpage" element={<ManagerMainPage />} />
+
 
 
               <Route path="/productdetail/:mealId" element={<ProductDetail />} />
@@ -58,10 +63,11 @@ function Project() {
           </div>
         </div>
 
-      
-    </CurrentUser>
+
+      </CurrentUser>
 
     </Provider >
   );
 }
 export default Project;
+
