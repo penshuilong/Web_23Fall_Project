@@ -67,15 +67,7 @@ function UserDetails() {
         <div>
           <p>Username: {user.username}</p>
           <p>Email: {user.email}</p>
-          <p>
-            First Name:
-            <input
-              type="text"
-              className="form-control"
-              value={user.firstName}
-              onChange={(e) => setUser({ ...user, firstName: e.target.value })}
-            />
-          </p>
+          <p>First Name: {user.firstName}</p>
           <p>Last Name: {user.lastName}</p>
           
           {/* <h3>Likes</h3>
@@ -94,10 +86,10 @@ function UserDetails() {
               <Link
                 key={index}
                 className="list-group-item"
-                to={`/project/users/${follows.follower._id}`}
+                to={`/project/profile/${follows.follower._id}`}
               >
                 {follows.follower.username}
-                {follows.follower._id}
+                
               </Link>
             ))}
           </div>
@@ -107,10 +99,10 @@ function UserDetails() {
               <Link
                 key={index}
                 className="list-group-item"
-                to={`/project/users/${follows.followed._id}`}
+                to={`/project/profile/${follows.followed._id}`}
               >
                 {follows.followed.username}
-                {follows.followed._id}
+                
               </Link>
             ))}
           </div>

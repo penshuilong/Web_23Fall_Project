@@ -8,7 +8,7 @@ import { API_KEY, MEAL_API } from '../client';
 import * as client from '../client';
 
 import {useDispatch} from 'react-redux';
-import store from '../store';
+
 // import { setSearchQuery } from './searchReducer';
 
 import CurrentUser from "../user/currentUser";

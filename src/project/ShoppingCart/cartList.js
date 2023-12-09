@@ -5,8 +5,14 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { removeFromCart } from '../ProductDetail/cartReducer';
 function CartList() {
-    const { cartItems } = useSelector(state => state.cartReducer);
-    console.log('cartItems:', cartItems);
+    // const { cartItems } = useSelector(state => state.cartReducer);
+    // console.log('cartItems:', cartItems);
+
+        const { cartItems } = useSelector(state => {
+            console.log("Full state:", state);
+            return state.cartReducer;
+        });
+        console.log('cartItems:', cartItems);
     const dispatch = useDispatch();
 
     const handleDelete = (itemId) => {
@@ -21,6 +27,8 @@ function CartList() {
             <div className='container'>
                 <div className='row'>
                     <ul className="list-group">
+                    {cartItems && cartItems.length === 0 && <p>No items in the cart</p>}
+
                         {cartItems && cartItems.map(item => (
                             <li key={item.id} className="list-group-item border-0">
                                 <div className="card">

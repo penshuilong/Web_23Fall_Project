@@ -43,9 +43,7 @@ function Project() {
               <Route path="/Account" element={<Account />} />
               <Route path="/Account/:id" element={<Account />} />
               <Route path="/admin/users" element={<UserTable />} />
-              <Route path="/userdetail/:id" element={<UserDetails />} />
-              <Route path="/sellermainpage" element={<SellerMainPage />} />
-              <Route path="/managermainpage" element={<ManagerMainPage />} />
+              <Route path="/profile/:id" element={<UserDetails />} />
 
 
               <Route path="/productdetail/:mealId" element={<ProductDetail />} />
