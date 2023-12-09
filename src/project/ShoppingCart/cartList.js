@@ -1,13 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { removeFromCart } from '../ProductDetail/cartReducer';
 function CartList() {
-    
     const { cartItems } = useSelector(state => state.cartReducer);
     console.log('cartItems:', cartItems);
+    const dispatch = useDispatch();
 
-
+    const handleDelete = (itemId) => {
+        // Dispatch the removeFromCart action with the item's ID
+        dispatch(removeFromCart(itemId));
+    };
 
 
     return (
