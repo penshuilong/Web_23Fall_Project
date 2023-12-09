@@ -11,6 +11,7 @@ import { addToCart } from './cartReducer';
 function ProductDetail() {
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(0);
+    const [addedToCart, setAddedToCart] = useState(false);
 
     const dispatch = useDispatch();
     const handleAddToCart = () => {
@@ -22,6 +23,7 @@ function ProductDetail() {
             picture: meal.strMealThumb,
         };
         dispatch(addToCart(item));
+        setAddedToCart(true); 
     };
 
 
@@ -49,13 +51,14 @@ function ProductDetail() {
         const maxPrice = 35.99; 
         const randomPrice = (Math.random() * (maxPrice - minPrice) + minPrice).toFixed(2);
         setPrice(randomPrice);
-
+        setAddedToCart(false);
     }
     , [mealId]);
 
     return (
         <div>
             <h1>Product Detail</h1>
+            {addedToCart && <div className="alert alert-success">Added to cart successfully!</div>}
             {meal && (
             <div className="row">
                 <div className="col-md-4">
