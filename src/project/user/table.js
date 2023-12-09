@@ -46,7 +46,7 @@ function UserTable() {
   };
   useEffect(() => { fetchUsers(); }, []);
   return (
-    <div>
+    <div className="ms-5">
       <h1>User List</h1>
       <table className="table">
         <thead>
@@ -71,7 +71,7 @@ function UserTable() {
               <select value={user.role} onChange={(e) => setUser({ ...user, role: e.target.value })}>
                 <option value="USER">User</option>
                 <option value="SELLER">Seller</option>
-                <option value="MANAGER">Manager</option>
+                <option value="Admin">Admin</option>
 
               </select>
             </td>
@@ -88,7 +88,7 @@ function UserTable() {
           {users.map((user) => (
             <tr key={user._id}>
               <td>
-              <Link to={`/project/Account/${user._id}`}>
+              <Link to={`/project/profile/${user._id}`}>
                 {user.username}
              </Link>
               </td>

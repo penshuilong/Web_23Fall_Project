@@ -8,7 +8,7 @@ import { API_KEY, MEAL_API } from '../client';
 import * as client from '../client';
 
 import {useDispatch} from 'react-redux';
-import store from '../store';
+
 // import { setSearchQuery } from './searchReducer';
 
 import CurrentUser from "../user/currentUser";
@@ -34,8 +34,9 @@ function Header() {
   const jumpShoppingCart = () => { navigate('/project/shoppingcart'); };
 
   const jumpSearch = () => { navigate('/project/search'); };
+  const jumpHome = () => { navigate('/project'); };
 
-  const jumpAccount = () => {navigate('/project/Account');};
+  const jumpAccount = () => {navigate('/project/profile');};
 
 
   const [searchTerm, setSearchTerm] = useState("Arrabiata");
@@ -80,14 +81,6 @@ function Header() {
                 Cart
               </button>
 
-       
-
-
-              <button onClick={jumpLogin} className="rounded border p-1 ml-2 btn btn-outline-secondary" style={{ width: "200px" }} >
-                <FontAwesomeIcon icon={faSignInAlt} className="icon me-2" />
-                Sign in
-              </button>
-              
 
           {currentUser ? (
           <button onClick={jumpAccount} className="rounded border p-1 ml-2 btn btn-outline-secondary" style={{ width: "200px" }}>

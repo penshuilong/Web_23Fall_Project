@@ -41,8 +41,8 @@ function Account() {
 
 
   return (
-    <div className="w-50">
-      <h1>Account</h1>
+    <div className="w-50 ms-5">
+      <h1>Profile</h1>
       {account && (
         <div>
           <h5>Username</h5>
@@ -85,21 +85,17 @@ function Account() {
             </>
           )}
           <br/><br/>
-
-          <select onChange={(e) => setAccount({ ...account, role: e.target.value })}>
-            <option value="USER">User</option>
-            <option value="SELLER">Seller</option>
-            <option value="MANAGER">Manager</option>
-          </select>
+          <p>Role: {account.role}</p>
           <br/><br/>
        
           <button onClick={save} className="btn btn-secondary">Save</button>
           <br/><br/>
 
-             
+          {account.role === 'ADMIN' && (
             <Link to="/project/admin/users" className="btn btn-warning w-100">
               Users
             </Link>
+          )}
          
 
             <button onClick={signout} className="btn btn-primary w-100">Signout
