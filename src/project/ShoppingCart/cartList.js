@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { removeFromCart } from '../ProductDetail/cartReducer';
+import { useNavigate } from 'react-router-dom';
+
 function CartList() {
     // const { cartItems } = useSelector(state => state.cartReducer);
     // console.log('cartItems:', cartItems);
@@ -14,10 +16,28 @@ function CartList() {
         });
         console.log('cartItems:', cartItems);
     const dispatch = useDispatch();
+    const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+    const navigate = useNavigate();
 
     const handleDelete = (itemId) => {
         // Dispatch the removeFromCart action with the item's ID
         dispatch(removeFromCart(itemId));
+    };
+
+    const handleCheckout = () => {
+        // Assume you have a function to place the order (e.g., send it to the server)
+        // If the order placement is successful, set isOrderPlaced to true.
+        // For demonstration purposes, let's assume the order is always successful.
+        setIsOrderPlaced(true);
+
+        // You can also perform any additional logic here, such as clearing the cart.
+    };
+
+    const handleClosePopup = () => {
+        setIsOrderPlaced(false);
+        
+        // Navigate back to the homepage after closing the pop-up
+        navigate('/project');
     };
 
 
@@ -50,7 +70,7 @@ function CartList() {
                                         <div className="col-md-3">
                                             <div className="card-body">
                                                 <p className="card-text">Total Price: ${(item.price * item.quantity).toFixed(2)}</p>
-                                                <button className="btn btn-danger" style={{ width: "150px" }}>Delete</button>
+                                                <button onClick={() => handleDelete(item.id)} className="btn btn-danger" style={{ width: "150px" }}>Delete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -60,8 +80,16 @@ function CartList() {
                     </ul>
                 </div>
                 <div className='row justify-content-end'>
-                    <button className="btn btn-primary mt-3" style={{ width: "150px" }} >Checkout</button>
+                    <button className="btn btn-primary mt-3" style={{ width: "150px" }} onClick={handleCheckout}>Checkout</button>
                 </div>
+                {isOrderPlaced && (
+                <div className="popup">
+                    <div className="popup-content">
+                        <p>Successfully placed order!</p>
+                        <button onClick={handleClosePopup}>Close</button>
+                    </div>
+                </div>
+            )}
             </div>
         </div>
     );
