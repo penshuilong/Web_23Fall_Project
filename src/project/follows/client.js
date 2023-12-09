@@ -1,7 +1,9 @@
 import axios from "axios";
 const client = axios.create({
   withCredentials: true,
-  baseURL: "https://project-web23.onrender.com/api/users",
+ 
+  baseURL: "http://localhost:4000/api/users",
+  // baseURL: "https://project-web23.onrender.com/api/users",
 });
 
 
