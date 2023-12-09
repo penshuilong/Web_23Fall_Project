@@ -77,7 +77,7 @@ function UserDetails() {
           <ul className="list-group">
             {likes.map((like, index) => (
               <li key={index} className="list-group-item">
-                <Link to={`/project/details/${like.idMeal}`}>
+                <Link to={`/project/productdetail/${like.idMeal}`}>
                 <img src={like.strMealThumb} alt={like.strMeal} style={{ width: '100px', height: '100px' }} />
                   {like.strMeal}
                 </Link>
