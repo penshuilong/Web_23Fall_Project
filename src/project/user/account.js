@@ -18,8 +18,10 @@ function Account() {
     setAccount(account);
   };
   const save = async () => {
+    console.log('Updating account:', account);
     await client.updateUser(account);
   };
+  
   
   const dispatch = useDispatch();
   const signout = async () => {
@@ -41,7 +43,7 @@ function Account() {
 
 
   return (
-    <div className="w-50 ms-5">
+    <div className="w-50 ms-5 mb-3">
       <h1>Profile</h1>
       {account && (
         <div>
@@ -69,8 +71,30 @@ function Account() {
           <input value={account.email}
             onChange={(e) => setAccount({ ...account,
               email: e.target.value })}/>
+          
 
           {/* Conditional rendering based on the role */}
+          
+          {account.role === 'USER' && (
+            <>
+              <h5>Delivery Address</h5>
+              <input value={account.deliveryAddress}
+                onChange={(e) => setAccount({ ...account,
+                  deliveryAddress: e.target.value })}/>
+
+            </>
+          )}
+
+          {account.role === 'ADMIN' && (
+            <>
+              <h5>Admin Duration</h5>
+              <input value={account.adminDuration}
+                onChange={(e) => setAccount({ ...account,
+                  adminDuration: e.target.value })}/>
+
+            </>
+          )}
+
           {account.role === 'SELLER' && (
             <>
               <h5>Restaurant Name</h5>
@@ -92,17 +116,17 @@ function Account() {
           <br/><br/>
 
           {account.role === 'ADMIN' && (
-            <Link to="/project/admin/users" className="btn btn-warning w-100">
+            <Link to="/project/admin/users" className="btn btn-warning w-100 mb-1">
               Users
             </Link>
           )}
          
 
-            <button onClick={signout} className="btn btn-primary w-100">Signout
+            <button onClick={signout} className="btn btn-primary w-100 mb-1">Signout
             </button>
 
           
-          <Link to="/project/" className="btn btn-success w-100">
+          <Link to="/project/" className="btn btn-success w-100 mb-1">
             Back to Mainpage
             </Link>
 
