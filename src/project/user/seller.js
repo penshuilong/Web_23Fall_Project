@@ -24,7 +24,7 @@ function SellerSignup() {
         ...credentials,
         dob: `${credentials.birthdayMonth}-${credentials.birthdayDay}`
       });
-      navigate("/project/Account");
+      navigate("/project/profile");
     } catch (err) {
       setError(err.response.data.message);
     }
