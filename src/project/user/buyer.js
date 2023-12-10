@@ -9,6 +9,7 @@ function BuyerSignup() {
     lastName: "",
     email: "",
     password: "",
+    deliveryAddress:"",
     birthdayMonth: "",
     birthdayDay: "",
     dob: "" 
@@ -64,6 +65,14 @@ function BuyerSignup() {
         onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
       />
 
+      <label>Delivery Address</label>
+      <input
+        className="buyerSignup-input"
+        type="deliveryAddress"
+        value={credentials.deliveryAddress}
+        onChange={(e) => setCredentials({ ...credentials, deliveryAddress: e.target.value })}
+      />
+
       
 <label className="buyerSignup-label">Birthday</label>
 <div className="buyerSignup-birthday-container">
@@ -110,3 +119,4 @@ function BuyerSignup() {
 }
 
 export default BuyerSignup;
+
