@@ -71,7 +71,7 @@ function UserTable() {
               <select value={user.role} onChange={(e) => setUser({ ...user, role: e.target.value })}>
                 <option value="USER">User</option>
                 <option value="SELLER">Seller</option>
-                <option value="Admin">Admin</option>
+                <option value="ADMIN">Admin</option>
 
               </select>
             </td>
