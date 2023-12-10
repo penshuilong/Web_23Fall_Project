@@ -1,13 +1,20 @@
 import * as client from "./client";
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
 import { clearCurrentUser } from "./reducer";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import * as followsClient from "../follows/client";
+import * as likesClient from "../likes/client";
+
 
 function Account() {
   const { id } = useParams();
   const [account, setAccount] = useState(null);
+  const [likes, setLikes] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const { currentUser } = useSelector((state) => state.userReducer);
+
   const findUserById = async (id) => {
     const user = await client.findUserById(id);
     setAccount(user);
@@ -29,6 +36,23 @@ function Account() {
     dispatch(clearCurrentUser()); 
     navigate("/project/Login");
   };
+  const fetchLikes = async () => {
+    if (!id) return;
+    const likes = await likesClient.findMealsThatUserLikes(id);
+    setLikes(likes);
+  };
+
+  const fetchFollowers = async () => {
+    if (!id) return;
+    const followers = await followsClient.findFollowersOfUser(id);
+    setFollowers(followers);
+  };
+
+  const fetchFollowing = async () => {
+    if (!id) return;
+    const following = await followsClient.findFollowedUsersByUser(id);
+    setFollowing(following);
+  };
 
 
 
@@ -41,6 +65,34 @@ function Account() {
     }
   }, []);
 
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchLikes();
+      fetchFollowers();
+      fetchFollowing();
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (currentUser?._id) {
+        try {
+          const likesData = await likesClient.findMealsThatUserLikes(currentUser._id);
+          setLikes(likesData);
+          const followersData = await followsClient.findFollowersOfUser(currentUser._id);
+          setFollowers(followersData);
+          const followingData = await followsClient.findFollowedUsersByUser(currentUser._id);
+          setFollowing(followingData);
+        } catch (error) {
+          console.error("Error fetching data", error);
+        }
+      }
+    };
+  
+    fetchData();
+  }, [currentUser]);
+  
 
   return (
     <div className="w-50 ms-5 mb-3">
@@ -109,11 +161,54 @@ function Account() {
             </>
           )}
           <br/><br/>
-          <p>Role: {account.role}</p>
-          <br/><br/>
+          <p className="mb-3">Role: {account.role}</p>
        
-          <button onClick={save} className="btn btn-secondary">Save</button>
-          <br/><br/>
+          <button onClick={save} className="btn btn-secondary mb-3">Save</button>
+          <br/>
+
+
+          <h3 className="mb-3">Likes</h3>
+      {likes.length === 0 ? (
+        <p>None</p>
+      ) : (
+        <ul className="list-group">
+          {likes.map((like, index) => (
+            <li key={index} className="list-group-item">
+              <Link to={`/project/productdetail/${like.idMeal}`} className="text-dark text-decoration-none">
+                <img src={like.strMealThumb} alt={like.strMeal} style={{ width: '100px', height: '100px' }} />
+                {like.strMeal}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <h3 className="mb-3">Followers</h3>
+      {followers.length === 0 ? (
+        <p>None</p>
+      ) : (
+        <div className="list-group">
+          {followers.map((follower, index) => (
+            <Link key={index} className="list-group-item" to={`/project/profile/${follower._id}`}>
+              {follower.username}
+            </Link>
+          ))}
+        </div>
+      )}
+
+        <h3 className="mb-3">Following</h3>
+        {following.length === 0 ? (
+          <p>None</p>
+        ) : (
+          <div className="list-group">
+            {following.map((follows, index) => (
+            <Link key={index} className="list-group-item" to={`/project/profile/${follows.followed._id}`}>
+            {follows.followed.username}
+          </Link>
+          ))}
+          </div>
+        )}
+
 
           {account.role === 'ADMIN' && (
             <Link to="/project/admin/users" className="btn btn-warning w-100 mb-1">
