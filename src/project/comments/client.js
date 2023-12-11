@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "https://project-web23.onrender.com";
+const API_BASE = "https://project-web23.onrender.com/api";
 
 const USERS_API = `${API_BASE}/users`;
 const COMMENTS_API = `${API_BASE}/comments`;
