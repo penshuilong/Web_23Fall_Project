@@ -8,7 +8,9 @@ import store from '../store';
 import { addToCart } from './cartReducer';
 import * as likesClient from "../likes/client";
 import * as userClient from "../user/client";
+import * as commentClient from "../comments/client";
 import { Link } from 'react-router-dom';
+
 
 function ProductDetail() {
     //new stuff, delete if there are bugs
@@ -95,13 +97,38 @@ function ProductDetail() {
 
         setLikes(likes.filter(like => like.user._id !== currentUser._id));
     };
-    
 
+    //comment
+    const [userComments, setUserComments] = useState([]); 
+    const [commentText, setCommentText] = useState(""); 
+    const submitComment = async () => {
+        if (!commentText) {
+          alert("No empty comments");
+          return;
+        }
+        try {
+          const newComment = await commentClient.createComment(currentUser._id, mealId, strMeal, commentText);
+          setUserComments([...userComments, newComment]);
+          setCommentText("");
+        } catch (error) {
+          console.error("There's something wrong...", error);
+        }
+      };
+      const fetchComments = async () => {
+        try {
+          const comments = await commentClient.findUsersThatCommentedMeal(mealId);
+          setUserComments(comments);
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+        }
+      };
+      
 
     useEffect(() => {
         fetchMeal();
         fetchUser();
         fetchLikes();
+        fetchComments();
         const minPrice = 5.99; 
         const maxPrice = 35.99; 
         const randomPrice = (Math.random() * (maxPrice - minPrice) + minPrice).toFixed(2);
@@ -116,18 +143,19 @@ function ProductDetail() {
 
     return (
         <div>
-            <h1>Product Detail</h1>
+            <h1 className='mb-2 ms-5'>Product Detail</h1>
             {addedToCart && <div className="alert alert-success">Added to cart successfully!</div>}
             {meal && (
+            <>
             <div className="row">
-                <div className="col-md-3 col-sm-6">
+                <div className="col-lg-2 col-md-6 col-sm-6 mb-2 ms-5">
                     <img src={meal.strMealThumb} alt={meal.strMeal} className="img-fluid" />
                 </div>
 
-                <div className="col-md-3 col-sm-6">
+                <div className="col-lg-2 col-md-6 col-sm-6 mb-2 ms-5">
                     <h2>{meal.strMeal}</h2>
                     {/* <p>Restaurant Name</p> */}
-                    <div className="d-flex align-items-center"> {/* Use Bootstrap's utility class for flex alignment */}
+                    <div className="d-flex align-items-center"> 
                         <p className="me-2">Quantity:</p>
                         <button onClick={decreaseQuantity} className="btn btn-outline-secondary btn-circle" style={{ textAlign: "center", fontSize: "12px" }}>-</button>
                         <span className="mx-2">{quantity}</span>
@@ -138,7 +166,7 @@ function ProductDetail() {
                 </div>
 
                 {/* Right column for ingredients */}
-                <div className="col-md-3 col-sm-6">
+                <div className="col-lg-2 col-md-6 col-sm-6 mb-2 ms-5">
                     <h3>Ingredients</h3>
                     <ul>
                         <li>{meal.strIngredient1}</li>
@@ -149,11 +177,10 @@ function ProductDetail() {
                         <li>{meal.strIngredient6}</li>
                         <li>{meal.strIngredient7}</li>
                         <li>{meal.strIngredient8}</li>
-                        {/* Add more ingredients as needed */}
                     </ul>
                 </div>
                 
-                <div className="col-md-3 col-sm-6">
+                <div className="col-lg-2 col-md-6 col-sm-6 mb-2 ms-5">
                 {currentUser && (userHasLiked ? 
                 <button onClick={currentUserUnlikesMeal} className="btn btn-danger float-end">
                     Unlike
@@ -179,13 +206,38 @@ function ProductDetail() {
                         </li>
                     ))}
                 </ul>
+                </div>
 
+                <div className="row"> 
+                <div className="col-12 mb-2 ms-3">
+            <textarea
+              rows="4"
+              cols="50"
+              className='mb-3 ms-5'
+              placeholder="Comment here please"
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+            />
+            <br/>
+            <button className='btn btn-warning mb-3 ms-5' onClick={submitComment}>Submit</button>
 
+            <div className='mb-3 ms-5'>
+              <h4>Comments</h4>
+              <ul>
+                {userComments.map((comment, index) => (
+                  <li key={index}>
+                    <strong>{comment.user.username}:</strong> {comment.strComments}
+                  </li>
+                ))}
+              </ul>
+            </div>
+                </div>
                 </div>
             </div>
-            )}
-        </div>
-    );
-}
+            </>
+        )}
+      </div>
+    );}
 
 export default ProductDetail;
+
