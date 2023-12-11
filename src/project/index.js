@@ -46,6 +46,7 @@ function Project() {
               <Route path="/profile/:id" element={<UserDetails />} />
               <Route path="/userdetail/:id" element={<UserDetails />} />
               <Route path="/sellermainpage" element={<SellerMainPage />} />
+              <Route path="/sellermainpage/:username" element={<SellerMainPage />} />
               <Route path="/managermainpage" element={<ManagerMainPage />} />
 
 
