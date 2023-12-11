@@ -12,7 +12,8 @@ function BuyerSignup() {
     deliveryAddress:"",
     birthdayMonth: "",
     birthdayDay: "",
-    dob: "" 
+    dob: "" ,
+    role:"USER"
   });
   const navigate = useNavigate();
 
@@ -22,11 +23,14 @@ function BuyerSignup() {
         ...credentials,
         dob: `${credentials.birthdayMonth}-${credentials.birthdayDay}`
       });
+      console.log("?")
       navigate("/project/profile");
     } catch (err) {
       setError(err.response.data.message);
     }
   };
+
+
 
   return (
     <div className="buyerSignup-container">
