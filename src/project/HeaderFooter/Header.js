@@ -54,10 +54,13 @@ function Header() {
       <div className="container-fluid">
         <div className="row align-items-center">
           <div className="col-auto">
-            <div className="logo-section d-flex align-items-center">
-              <FontAwesomeIcon icon={faBars} className="menu-icon me-2" />
-              <h4>Zbuyer</h4>
-            </div>
+          <button
+          className="logo-button d-flex align-items-center border-0 bg-transparent" onClick={jumpHome}
+          style={{ cursor: 'pointer' }}>
+          <FontAwesomeIcon icon={faBars} className="menu-icon me-2" />
+          <h4>Zbuyer</h4>
+          </button>
+
           </div>
           <div className="col"></div>
           <div className="col-auto">
