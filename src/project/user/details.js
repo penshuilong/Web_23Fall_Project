@@ -24,12 +24,27 @@ function UserDetails() {
     setUser(user);
   };
 
+  // const followUser = async () => {
+  //   const status = await followsClient.userFollowsUser(id);
+  // };
+  // const unfollowUser = async () => {
+  //   const status = await followsClient.userUnfollowsUser(id);
+  // };
+
   const followUser = async () => {
     const status = await followsClient.userFollowsUser(id);
+    if (status) { 
+      setFollowers([...followers, { follower: currentUser }]);
+    }
   };
   const unfollowUser = async () => {
     const status = await followsClient.userUnfollowsUser(id);
+    if (status) { 
+      setFollowers(followers.filter(follower => follower.follower._id !== currentUser._id));
+    }
   };
+  
+  
   const fetchFollowers = async () => {
     const followers = await followsClient.findFollowersOfUser(id);
     setFollowers(followers);
