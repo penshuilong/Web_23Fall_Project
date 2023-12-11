@@ -94,140 +94,161 @@ function Account() {
   }, [currentUser]);
   
 
-  return (
-    <div className="w-50 ms-5 mb-3">
-      <h1>Profile</h1>
-      {account && (
-        <div>
-          <h5>Username</h5>
-          <input value={account.username}
-            onChange={(e) => setAccount({ ...account,
-              username: e.target.value })}/>
-          <h5>Password</h5>
-          <input value={account.password}
-            onChange={(e) => setAccount({ ...account,
-              password: e.target.value })}/>
-          <h5>First Name</h5>
-          <input value={account.firstName}
-            onChange={(e) => setAccount({ ...account,
-              firstName: e.target.value })}/>
-          <h5>Last Name</h5>
-          <input value={account.lastName}
-            onChange={(e) => setAccount({ ...account,
-              lastName: e.target.value })}/>
-          <h5>Date of Birth</h5>
-          <input value={account.dob}
-            onChange={(e) => setAccount({ ...account,
-              dob: e.target.value })}/>
-          <h5>Email</h5>
-          <input value={account.email}
-            onChange={(e) => setAccount({ ...account,
-              email: e.target.value })}/>
+
+return (
+  <div className="container">
+    <h1>Profile</h1>
+    {account && (
+      <>
+        <div className="row">
+          <div className="col-md-6">
+            {/* Profile Information */}
+            <h5>Username</h5>
+            <input 
+              className="form-control mb-2"
+              value={account.username}
+              onChange={(e) => setAccount({ ...account, username: e.target.value })}
+            />
+            <h5>Password</h5>
+            <input 
+              className="form-control mb-2"
+              value={account.password}
+              onChange={(e) => setAccount({ ...account, password: e.target.value })}/>
+
+            <h5>First Name</h5>
+            <input 
+            className="form-control mb-2"
+            value={account.firstName}
+            onChange={(e) => setAccount({ ...account,firstName: e.target.value })}/>
+
+            <h5>Last Name</h5>
+            <input 
+            className="form-control mb-2"
+            value={account.lastName} 
+            onChange={(e) => setAccount({ ...account,lastName: e.target.value })}/>
+
+            <h5>Date of Birth</h5>
+            <input
+            className="form-control mb-2" 
+            value={account.dob}
+            onChange={(e) => setAccount({ ...account,dob: e.target.value })}/>
+
+            <h5>Email</h5>
+            <input
+            className="form-control mb-2" 
+            value={account.email}
+            onChange={(e) => setAccount({ ...account,email: e.target.value })}/>
           
 
-          {/* Conditional rendering based on the role */}
+           {/* Conditional rendering based on the role */}
           
-          {account.role === 'USER' && (
+           {account.role === 'USER' && (
             <>
               <h5>Delivery Address</h5>
-              <input value={account.deliveryAddress}
-                onChange={(e) => setAccount({ ...account,
-                  deliveryAddress: e.target.value })}/>
-
+              <input 
+              className="form-control mb-2"
+              value={account.deliveryAddress}
+              onChange={(e) => setAccount({ ...account,deliveryAddress: e.target.value })}/>
             </>
           )}
 
-          {account.role === 'ADMIN' && (
+           {account.role === 'ADMIN' && (
             <>
               <h5>Admin Duration</h5>
-              <input value={account.adminDuration}
-                onChange={(e) => setAccount({ ...account,
-                  adminDuration: e.target.value })}/>
+              <input 
+              className="form-control mb-2"
+              value={account.adminDuration}
+                onChange={(e) => setAccount({ ...account,adminDuration: e.target.value })}/>
 
             </>
           )}
 
-          {account.role === 'SELLER' && (
+           {account.role === 'SELLER' && (
             <>
               <h5>Restaurant Name</h5>
-              <input value={account.restaurantName}
-                onChange={(e) => setAccount({ ...account,
-                  restaurantName: e.target.value })}/>
+              <input 
+              className="form-control mb-2"
+              value={account.restaurantName}
+              onChange={(e) => setAccount({ ...account,restaurantName: e.target.value })}/>
 
               <h5>Restaurant Address</h5>
-              <input value={account.restaurantAddress}
-                onChange={(e) => setAccount({ ...account,
-                  restaurantAddress: e.target.value })}/>
+              <input 
+              className="form-control mb-2"
+              value={account.restaurantAddress}
+              onChange={(e) => setAccount({ ...account,restaurantAddress: e.target.value })}/>
             </>
           )}
           <br/><br/>
           <p className="mb-3">Role: {account.role}</p>
-       
-          <button onClick={save} className="btn btn-secondary mb-3">Save</button>
-          <br/>
 
-
-          <h3 className="mb-3">Likes</h3>
-      {likes.length === 0 ? (
-        <p>None</p>
-      ) : (
-        <ul className="list-group">
-          {likes.map((like, index) => (
-            <li key={index} className="list-group-item">
-              <Link to={`/project/productdetail/${like.idMeal}`} className="text-dark text-decoration-none">
-                <img src={like.strMealThumb} alt={like.strMeal} style={{ width: '100px', height: '100px' }} />
-                {like.strMeal}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <h3 className="mb-3">Followers</h3>
-      {followers.length === 0 ? (
-        <p>None</p>
-      ) : (
-        <div className="list-group">
-          {followers.map((follower, index) => (
-            <Link key={index} className="list-group-item" to={`/project/profile/${follower._id}`}>
-              {follower.username}
-            </Link>
-          ))}
-        </div>
-      )}
-
-        <h3 className="mb-3">Following</h3>
-        {following.length === 0 ? (
-          <p>None</p>
-        ) : (
-          <div className="list-group">
-            {following.map((follows, index) => (
-            <Link key={index} className="list-group-item" to={`/project/profile/${follows.followed._id}`}>
-            {follows.followed.username}
-          </Link>
-          ))}
+            <button onClick={save} className="btn btn-secondary mb-3">Save</button>
           </div>
-        )}
 
+          <div className="col-md-6">
+            
+            <h3 className="mb-3">Likes</h3>
+            {likes.length === 0 ? (
+               <p>None</p>
+               ) : (
+                <ul className="list-group">
+                  {likes.map((like, index) => (
+                    <li key={index} className="list-group-item">
+                      <Link to={`/project/productdetail/${like.idMeal}`} className="text-dark text-decoration-none">
+                       <img src={like.strMealThumb} alt={like.strMeal} style={{ width: '100px', height: '100px' }} />
+                       {like.strMeal}
+                      </Link>
+                    </li>
+                 ))}
+                 </ul>
+             )}
+            <h3 className="mb-3">Followers</h3>
+                   {followers.length === 0 ? (
+                    <p>None</p>
+                    ) : (
+                      <div className="list-group">
+                        {followers.map((follower, index) => (
+                          <Link key={index} className="list-group-item" to={`/project/profile/${follower._id}`}>
+                            {follower.username}
+                            </Link>
+                            ))}
+                      </div>
+                      )}
 
-          {account.role === 'ADMIN' && (
-            <Link to="/project/admin/users" className="btn btn-warning w-100 mb-1">
-              Users
+            <h3 className="mb-3">Following</h3>
+            {following.length === 0 ? (
+              <p>None</p>
+              ) : (
+                <div className="list-group">
+                  {following.map((follows, index) => (
+                    <Link key={index} className="list-group-item" to={`/project/profile/${follows.followed._id}`}>
+                      {follows.followed.username}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        
+
+        <div className="row mt-4">
+          <div className="col text-center">
+            {account.role === 'ADMIN' && (
+              <Link to="/project/admin/users" className="btn btn-warning w-50 mb-1">
+                Users
+              </Link>
+            )}
+            <br/>
+            <button onClick={signout} className="btn btn-primary w-50 mb-1">Signout</button>
+            <br/>
+            <Link to="/project/" className="btn btn-success w-50 mb-1">
+              Back to Mainpage
             </Link>
-          )}
-         
-
-            <button onClick={signout} className="btn btn-primary w-100 mb-1">Signout
-            </button>
-
-          
-          <Link to="/project/" className="btn btn-success w-100 mb-1">
-            Back to Mainpage
-            </Link>
-
+          </div>
         </div>
-      )}
-    </div>
-  );
+      </>
+    )}
+  </div>
+);
 }
+
 export default Account;
