@@ -208,7 +208,7 @@ return (
                       <div className="list-group">
                         {followers.map((follower, index) => (
                           <Link key={index} className="list-group-item" to={`/project/profile/${follower._id}`}>
-                            {follower.username}
+                            {follower.follower.username}
                             </Link>
                             ))}
                       </div>
@@ -235,6 +235,11 @@ return (
             {account.role === 'ADMIN' && (
               <Link to="/project/admin/users" className="btn btn-warning w-50 mb-1">
                 Users
+              </Link>
+            )}
+          {account.role === 'SELLER' && (
+              <Link to="/project/sellermainpage" className="btn btn-warning w-50 mb-1">
+                My Restaurant
               </Link>
             )}
             <br/>
