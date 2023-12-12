@@ -260,7 +260,7 @@ function Account() {
                 </Link>
               )}
               {account.role === 'SELLER' && (
-                <Link to={() => viewStore(seller.username)} className="btn btn-warning w-50 mb-1">
+                <Link to={() => viewStore(sellers.username)} className="btn btn-warning w-50 mb-1">
                   My Restaurant
                 </Link> //测试
               )}
