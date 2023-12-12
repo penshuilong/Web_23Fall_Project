@@ -5,6 +5,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import * as followsClient from "../follows/client";
 import * as likesClient from "../likes/client";
+import axios from 'axios';
 
 
 function Account() {
@@ -14,6 +15,7 @@ function Account() {
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
   const { currentUser } = useSelector((state) => state.userReducer);
+  const [sellers, setSellers] = useState([]);
 
   const findUserById = async (id) => {
     const user = await client.findUserById(id);
