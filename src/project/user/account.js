@@ -238,10 +238,11 @@ return (
               </Link>
             )}
           {account.role === 'SELLER' && (
-              <Link to="/project/sellermainpage" className="btn btn-warning w-50 mb-1">
-                My Restaurant
-              </Link>
-            )}
+  <Link to={`/project/sellermainpage/${account.username}`} className="btn btn-warning w-50 mb-1">
+    My Restaurant
+  </Link>
+)}
+
             <br/>
             <button onClick={signout} className="btn btn-primary w-50 mb-1">Signout</button>
             <br/>

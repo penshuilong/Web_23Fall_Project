@@ -32,7 +32,7 @@ function SellerMainPage() {
         }
     };
 
-    const isSeller = currentUser && currentUser.role === 'SELLER';
+    const isSeller = currentUser && currentUser.role === 'SELLER' && currentUser.username === username;
 
     useEffect(() => {
         fetchUser();
