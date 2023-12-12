@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "https://project-web23.onrender.com"; //本地测试
+const API_BASE = "https://project-web23.onrender.com/api"; //本地测试
 //const API_BASE = "http://localhost:4000/api"
 
 const USERS_API = `${API_BASE}/users`;
