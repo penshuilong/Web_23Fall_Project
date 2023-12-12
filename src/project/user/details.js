@@ -24,11 +24,23 @@ function UserDetails() {
     setUser(user);
   };
 
+  // const followUser = async () => {
+  //   const status = await followsClient.userFollowsUser(id);
+  // };
+  // const unfollowUser = async () => {
+  //   const status = await followsClient.userUnfollowsUser(id);
+  // };
   const followUser = async () => {
     const status = await followsClient.userFollowsUser(id);
+    if (status) { 
+      setFollowers([...followers, { follower: currentUser }]);
+    }
   };
   const unfollowUser = async () => {
     const status = await followsClient.userUnfollowsUser(id);
+    if (status) { 
+      setFollowers(followers.filter(follower => follower.follower._id !== currentUser._id));
+    }
   };
   const fetchFollowers = async () => {
     const followers = await followsClient.findFollowersOfUser(id);
@@ -73,18 +85,25 @@ function UserDetails() {
           <p>First Name: {user.firstName}</p>
           <p>Last Name: {user.lastName}</p>
           
-          <h3>Likes</h3>
+          <h3 className="mb-3">Likes</h3>
+          {likes.length === 0 ? (
+           <p>None</p>
+          ) : (
           <ul className="list-group">
             {likes.map((like, index) => (
               <li key={index} className="list-group-item">
-                <Link to={`/project/details/${like.idMeal}`}>
+                <Link to={`/project/productdetail/${like.idMeal}`} className="text-dark text-decoration-none">
                 <img src={like.strMealThumb} alt={like.strMeal} style={{ width: '100px', height: '100px' }} />
                   {like.strMeal}
                 </Link>
               </li>
             ))}
           </ul>
-          <h3>Followers</h3>
+          )}
+          <h3 className="mb-3">Followers</h3>
+          {followers.length === 0 ? (
+         <p>None</p>
+          ) : (
           <div className="list-group">
             {followers.map((follows, index) => (
               <Link
@@ -97,7 +116,11 @@ function UserDetails() {
               </Link>
             ))}
           </div>
-          <h3>Following</h3>
+          )}
+          <h3 className="mb-3">Following</h3>
+          {following.length === 0 ? (
+          <p>None</p>
+          ) : (
           <div className="list-group">
             {following.map((follows, index) => (
               <Link
@@ -110,6 +133,8 @@ function UserDetails() {
               </Link>
             ))}
           </div>
+          )}
+
         </div>
       )}
     </div>
@@ -117,3 +142,4 @@ function UserDetails() {
 }
 
 export default UserDetails;
+

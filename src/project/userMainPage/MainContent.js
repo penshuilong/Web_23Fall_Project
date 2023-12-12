@@ -1,103 +1,152 @@
-import './MainContent.css'; 
 import React, { useState, useEffect } from 'react';
 import * as client from "../user/client"
 import CurrentUser from "../user/currentUser"
-
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import img1 from '../imags/1.jpg';
+import img2 from '../imags/2.jpg';
+import img3 from '../imags/3.jpg';
+import img4 from '../imags/4.jpg';
 
 function HomePage() {
-  const backgroundImage = "回头找一张好看的";
+  // We will need to replace this placeholder with an actual image URL later.
+  const backgroundImage = require("../imags/restaurantdefault.jpg"); // Replace with actual image path
   const [loggedinUser, setLoggedInUser] = useState(null);
+  const [sellers, setSellers] = useState([]);
 
   useEffect(() => {
     const fetchLoggedInUser = async () => {
-      const user = await client.account(); 
+      const user = await client.account();
       setLoggedInUser(user);
     };
 
     fetchLoggedInUser();
   }, []);
 
+  const navigate = useNavigate();
 
+  const viewStore = (username) => {
+    navigate(`/project/sellermainpage/${username}`);
+  };
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('https://project-web23.onrender.com/api/users');
+        const users = response.data;
+        const sellers = users.filter(user => user.role === "SELLER");
+        setSellers(sellers);
+      } catch (error) {
+        console.error("Error fetching users", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  {/* 图片路径数组 */ }
+  const images = [img1, img2, img3, img4];
 
   return (
     <CurrentUser>
-    <main className="main-content">
+      <main className="center">
 
-      <div className="row">
-          <nav className="col-12 navigation">
-            <a href="#shop1" className="p-2">Chinese Food</a>
-            <a href="#shop2" className="p-2">Italian Food</a>
-            <a href="#shop3" className="p-2">Hispanic Food</a>
-            <a href="#shop4" className="p-2">Soul Food</a>
-
-          </nav>
-        </div>
-
-
-       {/* Welcome Back Message(好丑啊 但是没想好怎么改) */}
-       {loggedinUser && (
-        <div className="row">
-          <div className="col-12">
-          <p className="welcome-back ms-3">Welcome back, {loggedinUser.username}!</p>
+        {/* Navigation */}
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+          <div className="container-fluid">
+            <a className="navbar-brand" href="https://silly-tarsier-6acc48.netlify.app/#/project">Food Store</a>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+              <div className="navbar-nav w-100">
+                <a className="nav-link text-white flex-fill text-center" href="#shop1">Chinese Food</a>
+                <a className="nav-link text-white flex-fill text-center" href="#shop2">Italian Food</a>
+                <a className="nav-link text-white flex-fill text-center" href="#shop3">Hispanic Food</a>
+                <a className="nav-link text-white flex-fill text-center" href="#shop4">Soul Food</a>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        </nav>
 
-      {/* Shop Introduction */}
-       <div className="shop-intro" style={{ backgroundImage: `url(${backgroundImage})` }}>
-        <div className="shop-intro-content">
-          <h2>Shop 1</h2>
-          <p>随便写吧大概</p>
-        </div>
-      </div>
-      
-      {/* Recommended Section */}
-      <div className="recommended-for-you py-3">
-        <h3>Recommended for you</h3>
+        {/* Welcome Message */}
+        {loggedinUser && (
+          <div className="alert alert-white text-start" role="alert" style={{ fontSize: '1.25rem' }}>
+            Welcome back, <strong>{loggedinUser.username}!</strong>
+          </div>
+        )}
 
-        <div className="row">
-          {[1, 2, 3, 4].map(item => (
-            <div key={item} className="col-md-3 mb-4">
-              <div className="card">
-             
-                <img src={`#`} alt="Placeholder" className="card-img-top" />
-          
-                <div className="card-body">
-                  {/* <h5 className="card-title">Heading 1</h5> */}
-                  <p className="card-text">food2-shop2 简介</p>
-                  
+        {/* Shop Introduction */}
+        <div className="jumbotron text-center bg-image" style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          width: '100vw',
+          height: '50vh',
+          marginLeft: '-15px',
+          marginRight: '-15px',
+          color: 'white', // This sets the text color to white
+          fontWeight: 'bold'
+        }}>
+          <h1 className="display-4" style={{ fontSize: '80px', fontWeight: 'bold' }}>Welcome to Zbuyer</h1>
+          <p className="lead" style={{ fontSize: '26px', }}>Discover amazing foods from around the world!</p>
+        </div>
+
+
+        {/* Restaurants Section */}
+        <div >
+          <h2 className="mb-4 text-center" style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-end',
+            fontSize: '50px',
+          }}>Restaurants :</h2>
+        </div>
+        {/* Restaurants Section */}
+
+        <div className="section-heading-2 text-center">
+          {sellers.map((seller, index) => (
+            <div key={seller._id} className="row justify-content-center mb-3">
+              <div className="col-12 col-md-6 col-lg-8">
+                <div className="card mb-3 " style={{ width: '30%', height: '200px', justifyContent: 'center' }}>
+                  <div className="row g-0">
+                    <div className="col-md-4" style={{ height: '200px' }}>
+
+                      <img
+                        src={images[index % images.length]}
+                        className="img-fluid"
+                        alt={seller.restaurantName || "Restaurant"}
+                        style={{
+                          width: '200px',  // 宽度自动
+                          height: '100%', // 高度适应容器
+                          objectFit: 'cover'  // 保持图片比例
+                        }}
+                      />
+                    </div>
+                    <div className="col-md-8">
+                      <div className="card-body">
+                        <h5 className="card-title">{seller.restaurantName || "Restaurant"}</h5>
+                        <button className="btn btn-primary" onClick={() => viewStore(seller.username)}>View Store</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-      </div>
-
-     {/* Heading 2 Section */}
-     <div className="section-heading-2 py-3">
-        <h2 className="text-left mb-4">Heading 2</h2>
-        <div className="item-container">
-          {[1, 2, 3, 4].map(item => (
-            <div key={item} className="item-wrapper mb-4">
-              <div className="item rounded border p-2 d-flex align-items-center">
-                <div className="image-placeholder me-3">
-                  {/* Placeholder image */}
-                  <img src={`#`} alt="Placeholder" className="rounded" />
-                </div>
-                <h5 className="flex-grow-1 me-3">Heading 1</h5>
-                <button className="btn btn-primary">View Store</button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
 
 
-      {/* Load More*/}
-      <div className="load-more py-3 text-center">
-        <button className="btn btn-outline-secondary">Show More</button>
-      </div>
-    </main>
+
+
+
+
+
+
+
+
+      </main>
     </CurrentUser>
   );
 }

@@ -9,9 +9,11 @@ function BuyerSignup() {
     lastName: "",
     email: "",
     password: "",
+    deliveryAddress:"",
     birthdayMonth: "",
     birthdayDay: "",
-    dob: "" 
+    dob: "" ,
+    role:"USER"
   });
   const navigate = useNavigate();
 
@@ -21,11 +23,14 @@ function BuyerSignup() {
         ...credentials,
         dob: `${credentials.birthdayMonth}-${credentials.birthdayDay}`
       });
-      navigate("/project/Account");
+      console.log("?")
+      navigate("/project/profile");
     } catch (err) {
       setError(err.response.data.message);
     }
   };
+
+
 
   return (
     <div className="buyerSignup-container">
@@ -62,6 +67,14 @@ function BuyerSignup() {
         type="password"
         value={credentials.password}
         onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+      />
+
+      <label>Delivery Address</label>
+      <input
+        className="buyerSignup-input"
+        type="deliveryAddress"
+        value={credentials.deliveryAddress}
+        onChange={(e) => setCredentials({ ...credentials, deliveryAddress: e.target.value })}
       />
 
       
@@ -110,3 +123,4 @@ function BuyerSignup() {
 }
 
 export default BuyerSignup;
+

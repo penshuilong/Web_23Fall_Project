@@ -8,9 +8,11 @@ import store from '../store';
 import { addToCart } from './cartReducer';
 import * as likesClient from "../likes/client";
 import * as userClient from "../user/client";
+import * as commentClient from "../comments/client";
 import { Link } from 'react-router-dom';
 import * as cartClient from "./client";
 import { current } from '@reduxjs/toolkit';
+
 
 function ProductDetail() {
     //new stuff, delete if there are bugs
@@ -124,13 +126,39 @@ function ProductDetail() {
     // }
 
 
+    //comment
+    const [userComments, setUserComments] = useState([]); 
+    const [commentText, setCommentText] = useState(""); 
+    const submitComment = async () => {
+        if (!commentText) {
+          alert("No empty comments");
+          return;
+        }
+        try {
+          const newComment = await commentClient.createComment(currentUser._id, mealId, strMeal, commentText);
+          setUserComments([...userComments, newComment]);
+          setCommentText("");
+        } catch (error) {
+          console.error("There's something wrong...", error);
+        }
+      };
+      const fetchComments = async () => {
+        try {
+          const comments = await commentClient.findUsersThatCommentedMeal(mealId);
+          setUserComments(comments);
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+        }
+      };
+      
 
     useEffect(() => {
         fetchMeal();
         fetchUser();
         fetchLikes();
-        const minPrice = 5.99;
-        const maxPrice = 35.99;
+        fetchComments();
+        const minPrice = 5.99; 
+        const maxPrice = 35.99; 
         const randomPrice = (Math.random() * (maxPrice - minPrice) + minPrice).toFixed(2);
         setPrice(randomPrice);
         fetchLikes().then(() => {
@@ -143,23 +171,51 @@ function ProductDetail() {
 
     return (
         <div>
-            <h1>Product Detail</h1>
+            <h1 className='mb-2 ms-5'>Product Detail</h1>
             {addedToCart && <div className="alert alert-success">Added to cart successfully!</div>}
             {meal && (
-                <div className="row">
-                    <div className="col-md-3 col-sm-6">
-                        <img src={meal.strMealThumb} alt={meal.strMeal} className="img-fluid" />
-                    </div>
 
-                    <div className="col-md-3 col-sm-6">
-                        <h2>{meal.strMeal}</h2>
-                        {/* <p>Restaurant Name</p> */}
-                        <div className="d-flex align-items-center"> {/* Use Bootstrap's utility class for flex alignment */}
-                            <p className="me-2">Quantity:</p>
-                            <button onClick={decreaseQuantity} className="btn btn-outline-secondary btn-circle" style={{ textAlign: "center", fontSize: "12px" }}>-</button>
-                            <span className="mx-2">{quantity}</span>
-                            <button onClick={increaseQuantity} className="btn btn-outline-secondary btn-circle" style={{ textAlign: "center", fontSize: "12px" }} >+</button>
-                        </div>
+//                 <div className="row">
+//                     <div className="col-md-3 col-sm-6">
+//                         <img src={meal.strMealThumb} alt={meal.strMeal} className="img-fluid" />
+//                     </div>
+
+//                     <div className="col-md-3 col-sm-6">
+//                         <h2>{meal.strMeal}</h2>
+//                         {/* <p>Restaurant Name</p> */}
+//                         <div className="d-flex align-items-center"> {/* Use Bootstrap's utility class for flex alignment */}
+//                             <p className="me-2">Quantity:</p>
+//                             <button onClick={decreaseQuantity} className="btn btn-outline-secondary btn-circle" style={{ textAlign: "center", fontSize: "12px" }}>-</button>
+//                             <span className="mx-2">{quantity}</span>
+//                             <button onClick={increaseQuantity} className="btn btn-outline-secondary btn-circle" style={{ textAlign: "center", fontSize: "12px" }} >+</button>
+//                         </div>
+//                         <p>Price: ${price}</p>
+//                         {currentUser && currentUser.role === "USER" && (
+//                         <button onClick={handleAddToCart} className="btn btn-primary" style={{ width: "150px" }}>Add to Cart</button>
+//                         )}
+
+//                         {showSignInAlert && (
+//                             <div className="alert alert-danger" role="alert">
+//                                 You must sign in to add to cart.
+//                             </div>
+//                         )}
+                        
+
+            <>
+            <div className="row">
+                <div className="col-lg-2 col-md-6 col-sm-6 mb-2 ms-5">
+                    <img src={meal.strMealThumb} alt={meal.strMeal} className="img-fluid" />
+                </div>
+
+                <div className="col-lg-2 col-md-6 col-sm-6 mb-2 ms-5">
+                    <h2>{meal.strMeal}</h2>
+                    {/* <p>Restaurant Name</p> */}
+                    <div className="d-flex align-items-center"> 
+                        <p className="me-2">Quantity:</p>
+                        <button onClick={decreaseQuantity} className="btn btn-outline-secondary btn-circle" style={{ textAlign: "center", fontSize: "12px" }}>-</button>
+                        <span className="mx-2">{quantity}</span>
+                        <button onClick={increaseQuantity} className="btn btn-outline-secondary btn-circle" style={{ textAlign: "center", fontSize: "12px" }} >+</button>
+                    </div>
                         <p>Price: ${price}</p>
                         {currentUser && currentUser.role === "USER" && (
                         <button onClick={handleAddToCart} className="btn btn-primary" style={{ width: "150px" }}>Add to Cart</button>
@@ -170,58 +226,134 @@ function ProductDetail() {
                                 You must sign in to add to cart.
                             </div>
                         )}
-                        
-                    </div>
-
-                    {/* Right column for ingredients */}
-                    <div className="col-md-3 col-sm-6">
-                        <h3>Ingredients</h3>
-                        <ul>
-                            <li>{meal.strIngredient1}</li>
-                            <li>{meal.strIngredient2}</li>
-                            <li>{meal.strIngredient3}</li>
-                            <li>{meal.strIngredient4}</li>
-                            <li>{meal.strIngredient5}</li>
-                            <li>{meal.strIngredient6}</li>
-                            <li>{meal.strIngredient7}</li>
-                            <li>{meal.strIngredient8}</li>
-                            {/* Add more ingredients as needed */}
-                        </ul>
-                    </div>
-
-                    <div className="col-md-3 col-sm-6">
-                        {currentUser && (userHasLiked ?
-                            <button onClick={currentUserUnlikesMeal} className="btn btn-danger float-end">
-                                Unlike
-                            </button> :
-                            <button onClick={currenUserLikesMeal} className="btn btn-warning float-end">
-                                Like
-                            </button>
-                        )}
-
-                        <h5>Likes</h5>
-                        <ul className="list-group">
-                            {likes.map((like, index) => (
-                                <li key={index} className="list-group-item">
-                                    {like.user && (
-                                        <>
-                                            {like.user.firstName} {like.user.lastName}
-                                            <Link to={`/project/profile/${like.user._id}`}>
-                                                <br />
-                                                @{like.user.username}
-                                            </Link>
-                                        </>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
-
-
-                    </div>
                 </div>
-            )}
-        </div>
-    );
-}
+
+
+//                     {/* Right column for ingredients */}
+//                     <div className="col-md-3 col-sm-6">
+//                         <h3>Ingredients</h3>
+//                         <ul>
+//                             <li>{meal.strIngredient1}</li>
+//                             <li>{meal.strIngredient2}</li>
+//                             <li>{meal.strIngredient3}</li>
+//                             <li>{meal.strIngredient4}</li>
+//                             <li>{meal.strIngredient5}</li>
+//                             <li>{meal.strIngredient6}</li>
+//                             <li>{meal.strIngredient7}</li>
+//                             <li>{meal.strIngredient8}</li>
+//                             {/* Add more ingredients as needed */}
+//                         </ul>
+//                     </div>
+
+//                     <div className="col-md-3 col-sm-6">
+//                         {currentUser && (userHasLiked ?
+//                             <button onClick={currentUserUnlikesMeal} className="btn btn-danger float-end">
+//                                 Unlike
+//                             </button> :
+//                             <button onClick={currenUserLikesMeal} className="btn btn-warning float-end">
+//                                 Like
+//                             </button>
+//                         )}
+
+//                         <h5>Likes</h5>
+//                         <ul className="list-group">
+//                             {likes.map((like, index) => (
+//                                 <li key={index} className="list-group-item">
+//                                     {like.user && (
+//                                         <>
+//                                             {like.user.firstName} {like.user.lastName}
+//                                             <Link to={`/project/profile/${like.user._id}`}>
+//                                                 <br />
+//                                                 @{like.user.username}
+//                                             </Link>
+//                                         </>
+//                                     )}
+//                                 </li>
+//                             ))}
+//                         </ul>
+
+
+//                     </div>
+//                 </div>
+//             )}
+//         </div>
+//     );
+// }
+
+                {/* Right column for ingredients */}
+                <div className="col-lg-2 col-md-6 col-sm-6 mb-2 ms-5">
+                    <h3>Ingredients</h3>
+                    <ul>
+                        <li>{meal.strIngredient1}</li>
+                        <li>{meal.strIngredient2}</li>
+                        <li>{meal.strIngredient3}</li>
+                        <li>{meal.strIngredient4}</li>
+                        <li>{meal.strIngredient5}</li>
+                        <li>{meal.strIngredient6}</li>
+                        <li>{meal.strIngredient7}</li>
+                        <li>{meal.strIngredient8}</li>
+                    </ul>
+                </div>
+                
+                <div className="col-lg-2 col-md-6 col-sm-6 mb-2 ms-5">
+                {currentUser && (userHasLiked ? 
+                <button onClick={currentUserUnlikesMeal} className="btn btn-danger float-end">
+                    Unlike
+                    </button> :
+                    <button onClick={currenUserLikesMeal} className="btn btn-warning float-end">
+                        Like
+                        </button>
+                    )}
+
+                <h5>Likes</h5>
+                <ul className="list-group">
+                    {likes.map((like, index) => (
+                        <li key={index} className="list-group-item">
+                            {like.user && (
+                                <>
+                                {like.user.firstName} {like.user.lastName}
+                                <Link to={`/project/profile/${like.user._id}`}>
+                                    <br/>
+                                    @{like.user.username}
+                                </Link>
+                                </>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+                </div>
+
+                <div className="row"> 
+                <div className="col-12 mb-2 ms-3">
+            <textarea
+              rows="4"
+              cols="50"
+              className='mb-3 ms-5'
+              placeholder="Comment here please"
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+            />
+            <br/>
+            <button className='btn btn-warning mb-3 ms-5' onClick={submitComment}>Submit</button>
+
+            <div className='mb-3 ms-5'>
+              <h4>Comments</h4>
+              <ul>
+                {userComments.map((comment, index) => (
+                  <li key={index}>
+                    <strong>{comment.user.username}:</strong> {comment.strComments}
+                  </li>
+                ))}
+              </ul>
+            </div>
+                </div>
+                </div>
+            </div>
+            </>
+        )}
+      </div>
+    );}
+
 
 export default ProductDetail;
+

@@ -1,120 +1,184 @@
-
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import * as userClient from "../user/client";
+
 function SellerMainPage() {
+    const { username } = useParams();
+    const [meals, setMeals] = useState([]); // 用于存储API获取的菜品数据
+    const [displayMeals, setDisplayMeals] = useState([]);// 用于存储展示的菜品
+    const [currentUser, setCurrentUser] = useState(null);
+    const [restaurantName, setRestaurantName] = useState('');
 
-    // Initialize state variables
-    const [totalTurnover, setTotalTurnover] = useState(1341);
-    const [productSold, setProductSold] = useState(63);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [selectedMeal, setSelectedMeal] = useState(null);
 
-    // You can create functions to update these values as needed
-    // For example, to handle a new sale:
-    const handleNewSale = (saleAmount) => {
-        setTotalTurnover(prevTurnover => prevTurnover + saleAmount);
-        setProductSold(prevSold => prevSold + 1);
+    const navigate = useNavigate();
+
+    const goToProductDetail = (mealId) => {
+        navigate(`/project/productdetail/${mealId}`);
     };
 
-    // Example product data array
-    const products = [
-        {
-            id: 1,
-            imagePath: 'path_to_your_image.jpg',
-            title: 'Product 1',
-            category: 'Category Name',
-            price: '26 $',
-            ingredients: 'List of ingredients',
-            instructions: 'Product usage instructions',
-            description: 'Full product description here...'
-
-        },
-        {
-            id: 2,
-            imagePath: 'path_to_image_2.jpg',
-            title: 'Product 2',
-            price: '30 $',
-            ingredients: 'List of ingredients',
-            instructions: 'Product usage instructions',
-            description: 'Full product description here...'
-        },
-        // ... More product objects
-        {
-            id: 3,
-            imagePath: 'path_to_image_3.jpg',
-            title: 'Product 3',
-            price: '20 $',
-            ingredients: 'List of ingredients',
-            instructions: 'Product usage instructions',
-            description: 'Full product description here...'
-        },
-        {
-            id: 4,
-            imagePath: 'path_to_image_4.jpg',
-            title: 'Product 4',
-            price: '15 $',
-            ingredients: 'List of ingredients',
-            instructions: 'Product usage instructions',
-            description: 'Full product description here...'
-        },
-        {
-            id: 5,
-            imagePath: 'path_to_image_4.jpg',
-            title: 'Product 5',
-            price: '15 $',
-            ingredients: 'List of ingredients',
-            instructions: 'Product usage instructions',
-            description: 'Full product description here...'
-        },
-        // Assume more products are added here
-    ];
-
-
-    // Split array into groups of four for creating rows
-    const groupedProducts = products.reduce((resultArray, item, index) => {
-        const chunkIndex = Math.floor(index / 4);
-
-        if (!resultArray[chunkIndex]) {
-            resultArray[chunkIndex] = []; // start a new chunk
+    const fetchUser = async () => {
+        try {
+            const user = await userClient.account();
+            setCurrentUser(user);
+        } catch (error) {
+            setCurrentUser(null);
         }
+    };
 
-        resultArray[chunkIndex].push(item);
+    // const isSeller = currentUser && currentUser.role === 'SELLER'; 增加一个判断用户名的条件
+    const isSeller = currentUser && currentUser.role === 'SELLER' && currentUser.username === username;
 
-        return resultArray;
+    useEffect(() => {
+        fetchUser();
     }, []);
+
+
+
+    useEffect(() => {
+        // Fetch seller-specific data
+        const fetchSellerData = async () => {
+            try {
+                const response = await axios.get(`https://project-web23.onrender.com/api/sellermeals/${username}`);
+                if (response.data && response.data.length > 0) {
+                    const mealsData = response.data[0].sellerMeal;
+                    const mealsDetails = await Promise.all(mealsData.map(async (mealId) => {
+                        const mealDetailResponse = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`);
+                        return mealDetailResponse.data.meals[0];
+                    }));
+                    setDisplayMeals(mealsDetails);
+                }
+
+            } catch (error) {
+                console.error("Error fetching seller data", error);
+            }
+        };
+
+        if (username) {
+            fetchSellerData();
+        }
+    }, [username]);
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const searchMeals = () => {
+        axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`)
+            .then(response => {
+                const meals = response.data.meals;
+                if (meals) {
+                    setSearchResults(meals);
+                } else {
+                    setSearchResults([]);
+                }
+            })
+            .catch(error => {
+                console.error("Error during search", error);
+            });
+    };
+
+    // 增加菜品
+    const addMeal = async () => {
+        if (selectedMeal && !displayMeals.some(meal => meal.idMeal === selectedMeal.idMeal)) {
+            try {
+                await axios.post('https://project-web23.onrender.com/api/sellermeals', {
+                    username, // 使用 username
+                    sellerMeal: selectedMeal.idMeal
+                });
+                setDisplayMeals([...displayMeals, selectedMeal]);
+                setSelectedMeal(null);
+            } catch (error) {
+                console.error("Error adding meal", error);
+            }
+        }
+    };
+
+    // 删除菜品
+    const deleteMeal = async (mealId) => {
+        try {
+            await axios.delete(`https://project-web23.onrender.com/api/sellermeals/${username}/${mealId}`);
+            setDisplayMeals(displayMeals.filter(meal => meal.idMeal !== mealId));
+        } catch (error) {
+            console.error("Error deleting meal", error);
+        }
+    };
+
+    const clearSearch = () => {
+        setSearchResults([]);
+        setSelectedMeal(null); // 如果想清除选中的菜品
+    };
+
+
+
 
     return (
         <>
-            <div style={{ display: 'flex', backgroundColor: 'gray', color: 'white', justifyContent: 'space-around', padding: '20px' }}>
-                <div>
-                    <h2>{totalTurnover} $</h2>
-                    <p>Total Turnover</p>
-                </div>
-                <div>
-                    <h2>{productSold}</h2>
-                    <p>Product Sold</p>
-                </div>
-            </div>
+            <div className="container mt-4">
+                {isSeller && (
+                    <div className="row mb-3">
 
-            <div className="container">
-                {groupedProducts.map((productGroup, index) => (
-                    <div className="row" key={index}>
-                        {productGroup.map((product, index) => (
-                            <div className="col-md-3 col-sm-6 mb-4" key={index}>
-                                <div className="card h-100">
-                                    <img src={product.imagePath} className="card-img-top" alt="Product" />
-                                    <div className="card-body">
-                                        <h5 className="card-title">{product.title}</h5>
-                                        <h6 className="card-subtitle mb-2 text-muted">Category: {product.category}</h6>
-                                        <p className="card-text">Price: {product.price}</p>
-                                        <p className="card-text">Ingredients: {product.ingredients}</p>
-                                        <p className="card-text">Instructions: {product.instructions}</p>
-                                        <p className="card-text">{product.description}</p>
-                                        {/* Other product details */}
-                                    </div>
+                        <div className="col">
+                            <input type="text" className="form-control" value={searchTerm} onChange={handleSearchChange} placeholder="Search meals..." />
+                        </div>
+                        <div className="col-auto">
+                            <button onClick={searchMeals} className="btn btn-primary">Search</button>
+                        </div>
+                        <div className="col-auto">
+                            <button onClick={addMeal} className="btn btn-success">Add</button>
+                        </div>
+                        <div className="col-auto">
+                            <button onClick={clearSearch} className="btn btn-warning">Clear Search</button>
+                        </div>
+                    </div>
+                )}
+
+
+                <div className="row mb-4 justify-content-center">
+                    <h2 className="text-center">{restaurantName}</h2>
+                </div>
+
+                <div className="row">
+                    {searchResults.map((meal) => (
+                        <div key={meal.idMeal} className="col-lg-3 col-md-4 col-sm-6 mb-2">
+                            <div className={`card ${selectedMeal && selectedMeal.idMeal === meal.idMeal ? 'border-success' : ''}`} onClick={() => setSelectedMeal(meal)}>
+                                <img src={meal.strMealThumb} className="card-img-top" alt={meal.strMeal} />
+                                <div className="card-body">
+                                    <h6 className="card-title">{meal.strMeal}</h6>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                ))}
+                        </div>
+                    ))}
+                </div>
+
+                <div className="row mt-4">
+                    <h4 className="col-12">Meals</h4>
+                    {displayMeals.map((meal) => (
+                        <div key={meal.idMeal} className="col-lg-3 col-md-4 col-sm-6 mb-2">
+                            <div className="card h-100" onClick={() => goToProductDetail(meal.idMeal)}>
+                                <img src={meal.strMealThumb} className="card-img-top" alt={meal.strMeal} />
+                                <div className="card-body">
+                                    <h5 className="card-title">{meal.strMeal}</h5>
+                                    <p className="card-text">Category{meal.strCategory}</p>
+                                    <p className="card-text">Area{meal.strArea}</p>
+                                    {isSeller && (
+                                        <button onClick={(e) => {
+                                            e.stopPropagation(); // 防止事件冒泡到卡片点击
+                                            deleteMeal(meal.idMeal);
+                                        }} className="btn btn-danger">Delete</button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
             </div>
         </>
     );
