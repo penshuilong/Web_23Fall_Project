@@ -228,58 +228,6 @@ function ProductDetail() {
                         )}
                 </div>
 
-
-//                     {/* Right column for ingredients */}
-//                     <div className="col-md-3 col-sm-6">
-//                         <h3>Ingredients</h3>
-//                         <ul>
-//                             <li>{meal.strIngredient1}</li>
-//                             <li>{meal.strIngredient2}</li>
-//                             <li>{meal.strIngredient3}</li>
-//                             <li>{meal.strIngredient4}</li>
-//                             <li>{meal.strIngredient5}</li>
-//                             <li>{meal.strIngredient6}</li>
-//                             <li>{meal.strIngredient7}</li>
-//                             <li>{meal.strIngredient8}</li>
-//                             {/* Add more ingredients as needed */}
-//                         </ul>
-//                     </div>
-
-//                     <div className="col-md-3 col-sm-6">
-//                         {currentUser && (userHasLiked ?
-//                             <button onClick={currentUserUnlikesMeal} className="btn btn-danger float-end">
-//                                 Unlike
-//                             </button> :
-//                             <button onClick={currenUserLikesMeal} className="btn btn-warning float-end">
-//                                 Like
-//                             </button>
-//                         )}
-
-//                         <h5>Likes</h5>
-//                         <ul className="list-group">
-//                             {likes.map((like, index) => (
-//                                 <li key={index} className="list-group-item">
-//                                     {like.user && (
-//                                         <>
-//                                             {like.user.firstName} {like.user.lastName}
-//                                             <Link to={`/project/profile/${like.user._id}`}>
-//                                                 <br />
-//                                                 @{like.user.username}
-//                                             </Link>
-//                                         </>
-//                                     )}
-//                                 </li>
-//                             ))}
-//                         </ul>
-
-
-//                     </div>
-//                 </div>
-//             )}
-//         </div>
-//     );
-// }
-
                 {/* Right column for ingredients */}
                 <div className="col-lg-2 col-md-6 col-sm-6 mb-2 ms-5">
                     <h3>Ingredients</h3>

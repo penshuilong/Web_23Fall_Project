@@ -259,11 +259,6 @@ function Account() {
                   Users
                 </Link>
               )}
-              // {account.role === 'SELLER' && (
-              //   <Link to={() => viewStore(sellers.username)} className="btn btn-warning w-50 mb-1">
-              //     My Restaurant
-              //   </Link> //测试
-              // )}
                {account.role === 'SELLER' && (
                  <Link to={`/project/sellermainpage/${account.username}`} className="btn btn-warning w-50 mb-1">
                   My Restaurant
