@@ -229,7 +229,7 @@ function Account() {
               ) : (
                 <div className="list-group">
                   {followers.map((follower, index) => (
-                    <Link key={index} className="list-group-item" to={`/project/profile/${follower._id}`}>
+                    <Link key={index} className="list-group-item" to={`/project/profile/${follows.follower._id}`}>
                       {follower.follower.username}
                     </Link>
                   ))}
