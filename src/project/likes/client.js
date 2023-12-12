@@ -17,6 +17,7 @@ export const deleteUserLikesMeal = async (userId, idMeal) => {
   const response = await axios.delete(`${USERS_API}/${userId}/likes/${idMeal}`);
   return response.data;
 };
+
 export const findUsersThatLikeMeal = async (idMeal) => {
   const response = await axios.get(`${LIKES_API}/${idMeal}/users`);
   return response.data;
