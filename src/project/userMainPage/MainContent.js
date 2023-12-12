@@ -33,7 +33,7 @@ function HomePage() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/users');
+        const response = await axios.get('https://project-web23.onrender.com/api/users');
         const users = response.data;
         const sellers = users.filter(user => user.role === "SELLER");
         setSellers(sellers);
@@ -55,7 +55,7 @@ function HomePage() {
         {/* Navigation */}
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
           <div className="container-fluid">
-            <a className="navbar-brand" href="http://localhost:3000/#/project">Food Store</a>
+            <a className="navbar-brand" href="https://silly-tarsier-6acc48.netlify.app/#/project">Food Store</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>

@@ -1,11 +1,12 @@
 import axios from "axios";
 
-const API_BASE = "https://project-web23.onrender.com";
+const API_BASE = "https://project-web23.onrender.com"; //本地测试
+//const API_BASE = "http://localhost:4000/api"
 
 const USERS_API = `${API_BASE}/users`;
 const COMMENTS_API = `${API_BASE}/comments`;
 
-export const findAllComments = async () => {};
+export const findAllComments = async () => { };
 
 
 export const createComment = async (userId, idMeal, strMeal, strComments) => {
@@ -14,7 +15,7 @@ export const createComment = async (userId, idMeal, strMeal, strComments) => {
       idMeal,
       strMeal,
       strComments,
-      
+
     });
 
     return response.data;
@@ -26,7 +27,7 @@ export const createComment = async (userId, idMeal, strMeal, strComments) => {
 
 
 
-  
+
 export const deleteUserCommentsMeal = async (userId, idMeal) => {
   const response = await axios.delete(`${USERS_API}/${userId}/comments/${idMeal}`);
   return response.data;

@@ -44,7 +44,7 @@ function SellerMainPage() {
         // Fetch seller-specific data
         const fetchSellerData = async () => {
             try {
-                const response = await axios.get(`http://localhost:4000/api/sellermeals/${username}`);
+                const response = await axios.get(`https://project-web23.onrender.com/api/sellermeals/${username}`);
                 if (response.data && response.data.length > 0) {
                     const mealsData = response.data[0].sellerMeal;
                     const mealsDetails = await Promise.all(mealsData.map(async (mealId) => {
@@ -87,7 +87,7 @@ function SellerMainPage() {
     const addMeal = async () => {
         if (selectedMeal && !displayMeals.some(meal => meal.idMeal === selectedMeal.idMeal)) {
             try {
-                await axios.post('http://localhost:4000/api/sellermeals', {
+                await axios.post('https://project-web23.onrender.com/api/sellermeals', {
                     username, // 使用 username
                     sellerMeal: selectedMeal.idMeal
                 });
@@ -102,7 +102,7 @@ function SellerMainPage() {
     // 删除菜品
     const deleteMeal = async (mealId) => {
         try {
-            await axios.delete(`http://localhost:4000/api/sellermeals/${username}/${mealId}`);
+            await axios.delete(`https://project-web23.onrender.com/api/sellermeals/${username}/${mealId}`);
             setDisplayMeals(displayMeals.filter(meal => meal.idMeal !== mealId));
         } catch (error) {
             console.error("Error deleting meal", error);
