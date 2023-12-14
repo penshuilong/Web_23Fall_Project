@@ -15,9 +15,9 @@ function Footer() {
    
       </div>
       <div className="footer-info1">
-        <p>xxxx</p>
-        <p>xxxx</p>
-        <p>meixianghao</p>
+        <p>Connect with us</p>
+        <p>More content</p>
+        <p>United States</p>
 
       </div>
     </footer>

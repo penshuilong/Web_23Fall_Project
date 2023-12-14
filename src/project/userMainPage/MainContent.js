@@ -106,7 +106,7 @@ function HomePage() {
         {/* Restaurants Section */}
 
         <div className="section-heading-2 text-center">
-          {sellers.map((seller, index) => (
+          {/* {sellers.map((seller, index) => (
             <div key={seller._id} className="row justify-content-center mb-3">
               <div className="col-12 col-md-6 col-lg-8">
                 <div className="card mb-3 " style={{ width: '30%', height: '200px', justifyContent: 'center' }}>
@@ -134,7 +134,40 @@ function HomePage() {
                 </div>
               </div>
             </div>
-          ))}
+          ))} */}
+          {sellers.map((seller, index) => (
+  <div key={seller._id} className="row justify-content-center mb-3">
+    <div className="col-12 col-md-6 col-lg-8">
+      <div className="card mb-3" style={{ width: '100%' }}>
+        <div className="row g-0">
+          <div className="col-md-4" style={{ height: '200px', overflow: 'hidden' }}>
+            <img
+              src={images[index % images.length]}
+              className="img-fluid"
+              alt={seller.restaurantName || "Restaurant"}
+              style={{
+                width: '100%',  // Full width
+                height: '100%', // Full height
+                objectFit: 'cover'  // Maintain image aspect ratio
+              }}
+            />
+          </div>
+          <div className="col-md-8">
+            <div className="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 className="card-title">{seller.restaurantName || "Restaurant"}</h5>
+              </div>
+              <div>
+                <button className="btn btn-primary" onClick={() => viewStore(seller.username)}>View Store</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+))}
+
         </div>
 
 
