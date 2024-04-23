@@ -8,7 +8,7 @@ function UserMainPageSearch() {
   // const results = useSelector(state => state.results);
   const location = useLocation();
 
-  //这个const你搜索不存在的东西会出bug 但是新的也不一定对
+  
   // const results = location.state?.results || null;
   const results = location.state?.results || []; 
 
