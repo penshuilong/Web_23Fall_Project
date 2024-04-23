@@ -118,9 +118,9 @@ function HomePage() {
                         className="img-fluid"
                         alt={seller.restaurantName || "Restaurant"}
                         style={{
-                          width: '200px',  // 宽度自动
-                          height: '100%', // 高度适应容器
-                          objectFit: 'cover'  // 保持图片比例
+                          width: '200px',  
+                          height: '100%', 
+                          objectFit: 'cover'  
                         }}
                       />
                     </div>
